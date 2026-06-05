@@ -1,0 +1,297 @@
+You are analyzing an existing Laravel + jQuery application.
+
+Your task is to study the entire codebase and populate the following documentation files so future AI agents can understand the system without repeatedly scanning the entire project.
+
+## General Rules
+
+* Read all relevant source code before writing.
+* Prefer facts from code over assumptions.
+* Keep documentation concise but complete.
+* Do not document unused code.
+* Focus on reducing future context/token usage.
+* Update existing files only; do not create new documentation files unless required.
+
+---
+
+# architecture.ai
+
+Analyze and document:
+
+## Technology Stack
+
+* Laravel version
+* PHP version requirements
+* Database engine
+* Frontend technologies
+* JavaScript libraries
+* CSS frameworks
+* Build tools
+* Queue systems
+* Cache systems
+* Authentication mechanism
+* Third-party integrations
+* Docker infrastructure
+* CI/CD if present
+
+## Application Architecture
+
+Explain:
+
+* Monolith or modular structure
+* Folder organization
+* Module boundaries
+* Service layer usage
+* Repository pattern usage
+* Trait usage
+* Event/listener architecture
+* Job/queue architecture
+* Middleware structure
+* Validation approach
+* API design approach
+
+## Request Flow
+
+Describe:
+
+Request
+→ Route
+→ Middleware
+→ Controller
+→ Request Validation
+→ Service Layer
+→ Model
+→ Database
+→ Response
+
+Provide actual project-specific examples.
+
+## Important Conventions
+
+Document:
+
+* Naming conventions
+* Controller conventions
+* Service conventions
+* Model conventions
+* View conventions
+* AJAX conventions
+* Error handling conventions
+
+---
+
+# database.ai
+
+Study all migrations and Eloquent models.
+
+Create a database reference containing:
+
+## Database Overview
+
+* Total tables
+* Major modules
+* Core business entities
+
+## Table Documentation
+
+For every table provide:
+
+### Table Name
+
+Purpose:
+What business problem it solves.
+
+Columns:
+
+* column
+* datatype
+* nullable
+* default value
+
+Relationships:
+
+* belongsTo
+* hasMany
+* belongsToMany
+
+Important Constraints:
+
+* unique keys
+* foreign keys
+* indexes
+
+Business Notes:
+How the table is used in the system.
+
+---
+
+## Relationship Map
+
+Create a high-level hierarchy such as:
+
+Fiscal Year
+└── Class
+└── Section
+└── Student
+
+or the actual hierarchy discovered in the project.
+
+---
+
+## Critical Tables
+
+Identify:
+
+* Core master tables
+* Transaction tables
+* Audit tables
+* User and permission tables
+* Configuration tables
+
+Explain why they are important.
+
+---
+
+## Data Flow
+
+Describe how data moves between major tables during common business operations.
+
+Use real project examples.
+
+---
+
+# flow.ai
+
+Create a developer handover document explaining the full request lifecycle.
+
+Focus on Laravel + jQuery interaction.
+
+Document:
+
+## Page Load Flow
+
+Browser
+→ Route
+→ Controller
+→ Blade
+→ Assets
+→ Render
+
+Use actual project examples.
+
+---
+
+## AJAX Flow
+
+Describe:
+
+jQuery Event
+→ AJAX Request
+→ Route
+→ Controller
+→ Validation
+→ Service
+→ Database
+→ JSON Response
+→ DOM Update
+
+Use actual project examples.
+
+---
+
+## Modal Flow
+
+If modals are used:
+
+* How data is loaded
+* Whether data comes from table row attributes or AJAX
+* How updates are submitted
+* How UI refreshes
+
+Document actual implementation patterns.
+
+---
+
+## CRUD Flow
+
+For each major module:
+
+Create
+Read
+Update
+Delete
+
+Document actual request lifecycle.
+
+---
+
+## Authentication Flow
+
+Explain:
+
+* Login process
+* Session handling
+* Middleware protection
+* Authorization checks
+
+---
+
+## Error Handling Flow
+
+Explain:
+
+* Validation errors
+* AJAX errors
+* Exception handling
+* Logging
+
+---
+
+## Frontend Patterns
+
+Document:
+
+* jQuery architecture
+* Event binding patterns
+* DataTables usage
+* Select2 usage
+* Form submission patterns
+* Toast/alert systems
+* Reusable helpers
+
+---
+
+## Backend Patterns
+
+Document:
+
+* Controller responsibilities
+* Service responsibilities
+* Request classes
+* Models
+* Traits
+* Helpers
+
+---
+
+## Developer Handover Summary
+
+End with a section called:
+
+"How to Add a New Module"
+
+Provide step-by-step instructions using patterns already present in the project:
+
+Migration
+→ Model
+→ Route
+→ Controller
+→ Request Validation
+→ Service
+→ Blade
+→ jQuery
+→ AJAX
+→ Testing
+
+Use existing project conventions rather than generic Laravel conventions.
+
+Your goal is to produce documentation that allows a future AI agent to understand the architecture, database, and request lifecycle without needing to rescan the entire codebase.
