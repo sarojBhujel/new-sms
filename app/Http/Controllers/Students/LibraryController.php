@@ -37,15 +37,14 @@ class LibraryController extends Controller
     }
 
 
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        return $this->library->update($request);
+        return $this->library->update($request, $id);
     }
 
-
-    public function destroy(Request $request)
+    public function destroy(Request $request, $id)
     {
-        return $this->library->destroy($request);
+        return $this->library->destroy($request, $id);
     }
 
     public function downloadAttachment($filename)

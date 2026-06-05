@@ -14,6 +14,10 @@ class SectionController extends Controller
 {
     public function index()
     {
+        if (request()->ajax()) {
+            return response()->json(Section::with(['grade', 'classroom', 'teachers'])->select(['id', 'Name_Section', 'Grade_id', 'Class_id', 'Status'])->paginate(10));
+        }
+
         $Grades = Grade::with(['Section'])->get();
         $list_Grades = Grade::all();
         $teachers = Teacher::all();
@@ -53,59 +57,85 @@ class SectionController extends Controller
 
     public function show($id)
     {
-        //
+        $Section = Section::with(['grade', 'classroom', 'teachers'])->findOrFail($id);
+        return response()->json($Section);
     }
 
-
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return Response
+     */
     public function edit($id)
     {
-        //
+        $Section = Section::with(['grade', 'classroom', 'teachers'])->findOrFail($id);
+        return response()->json($Section);
     }
 
-
-    public function update(StoreSections $request)
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function update(StoreSections $request, $id)
     {
-
         try {
             $validated = $request->validated();
-            $Sections = Section::findOrFail($request->id);
+            $Section = Section::findOrFail($id);
 
-            $Sections->Name_Section = $request->Name_Section;
-            $Sections->Grade_id = $request->Grade_id;
-            $Sections->Class_id = $request->Class_id;
+            $Section->Name_Section = $request->Name_Section;
+            $Section->Grade_id = $request->Grade_id;
+            $Section->Class_id = $request->Class_id;
+            $Section->Status = isset($request->Status) ? 1 : 0;
 
-            if (isset($request->Status)) {
-                $Sections->Status = 1;
-            } else {
-                $Sections->Status = 0;
-            }
+            $Section->save();
 
-            // update pivot tABLE
+            // update pivot table
             if (isset($request->teacher_id)) {
-                $Sections->teachers()->sync($request->teacher_id);
+                $Section->teachers()->sync($request->teacher_id);
             } else {
-                $Sections->teachers()->sync(array());
+                $Section->teachers()->sync(array());
             }
 
-            $Sections->save();
+            if ($request->ajax()) {
+                return response()->json(['message' => 'Section updated successfully.', 'section' => $Section->load(['grade', 'classroom', 'teachers'])]);
+            }
 
-            toastr()->success('Data has been Update successfully');
-
+            toastr()->success('Data has been updated successfully');
             return redirect()->route('Sections.index');
         } catch (\Exception $e) {
+            if ($request->ajax()) {
+                return response()->json(['error' => $e->getMessage()], 422);
+            }
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
     }
 
-
-
-    public function destroy(request $request)
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function destroy(Request $request, $id)
     {
+        try {
+            Section::findOrFail($id)->delete();
 
-        Section::findOrFail($request->id)->delete();
+            if ($request->ajax()) {
+                return response()->json(['message' => 'Section deleted successfully.']);
+            }
 
-        toastr()->error('Data has been Deleted successfully',' ');
-        return redirect()->route('Sections.index');
+            toastr()->error('Data has been deleted successfully');
+            return redirect()->route('Sections.index');
+        } catch (\Exception $e) {
+            if ($request->ajax()) {
+                return response()->json(['error' => $e->getMessage()], 422);
+            }
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     public function getClasses($id)

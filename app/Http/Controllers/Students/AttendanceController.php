@@ -47,8 +47,8 @@ class AttendanceController extends Controller
     }
 
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        return $this->Attendance->destroy($request, $id);
     }
 }

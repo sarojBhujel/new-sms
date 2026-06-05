@@ -41,13 +41,13 @@ class QuestionController extends Controller
         return $this->Question->edit($id);
     }
 
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        return $this->Question->update($request);
+        return $this->Question->update($request, $id);
     }
 
-    public function destroy(Request $request)
+    public function destroy(Request $request, $id)
     {
-        return $this->Question->destroy($request);
+        return $this->Question->destroy($request, $id);
     }
 }

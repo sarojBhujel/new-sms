@@ -45,15 +45,13 @@ class GraduatedController extends Controller
     }
 
 
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        return $this->Graduated->ReturnData($request);
+        return $this->Graduated->ReturnData($request, $id);
     }
 
-
-    public function destroy(Request $request)
+    public function destroy(Request $request, $id)
     {
-        return $this->Graduated->destroy($request);
-
+        return $this->Graduated->destroy($request, $id);
     }
 }

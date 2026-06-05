@@ -42,13 +42,13 @@ class QuizzController extends Controller
         return $this->Quizz->edit($id);
     }
 
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        return $this->Quizz->update($request);
+        return $this->Quizz->update($request, $id);
     }
 
-    public function destroy(Request $request)
+    public function destroy(Request $request, $id)
     {
-        return $this->Quizz->destroy($request);
+        return $this->Quizz->destroy($request, $id);
     }
 }

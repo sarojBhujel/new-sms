@@ -38,14 +38,13 @@ class FeesController extends Controller
     }
 
 
-    public function update(StoreFeesRequest $request)
+    public function update(StoreFeesRequest $request, $id)
     {
-        return $this->Fees->update($request);
+        return $this->Fees->update($request, $id);
     }
 
-
-    public function destroy(Request $request)
+    public function destroy(Request $request, $id)
     {
-        return $this->Fees->destroy($request);
+        return $this->Fees->destroy($request, $id);
     }
 }

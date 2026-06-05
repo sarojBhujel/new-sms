@@ -54,14 +54,14 @@ class TeacherController extends Controller
     }
 
 
-    public function update(StoreTeachers $request)
+    public function update(StoreTeachers $request, $id)
     {
-        return $this->Teacher->UpdateTeachers($request);
+        return $this->Teacher->UpdateTeachers($request, $id);
     }
 
 
-    public function destroy(Request $request)
+    public function destroy(Request $request, $id)
     {
-        return $this->Teacher->DeleteTeachers($request);
+        return $this->Teacher->DeleteTeachers($request, $id);
     }
 }

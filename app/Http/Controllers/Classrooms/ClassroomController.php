@@ -19,6 +19,10 @@ class ClassroomController extends Controller
      */
     public function index()
     {
+        if (request()->ajax()) {
+            return response()->json(Classroom::with('grade')->select(['id', 'Name_Class', 'Grade_id'])->paginate(10));
+        }
+
         $Grades = Grade::all();
         $My_Classes = Classroom::get();
 
@@ -81,6 +85,8 @@ class ClassroomController extends Controller
      */
     public function show($id)
     {
+        $Classroom = Classroom::findOrFail($id);
+        return response()->json($Classroom);
     }
 
     /**
@@ -91,6 +97,8 @@ class ClassroomController extends Controller
      */
     public function edit($id)
     {
+        $Classroom = Classroom::findOrFail($id);
+        return response()->json($Classroom);
     }
 
     /**
@@ -99,22 +107,27 @@ class ClassroomController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update(Request $request)
+    public function update(StoreClassrooms $request, $id)
     {
         try {
+            $validated = $request->validated();
+            $Classroom = Classroom::findOrFail($id);
 
-            $Classrooms = Classroom::findOrFail($request->id);
-
-            $Classrooms->update([
-
-                'Name_Class' => [$request->Name],
+            $Classroom->update([
+                'Name_Class' => $request->Name,
                 'Grade_id' => $request->Grade_id,
             ]);
 
-            toastr()->success('Data has been Update successfully');
-            return redirect()->route('Classrooms.index');
+            if ($request->ajax()) {
+                return response()->json(['message' => 'Classroom updated successfully.', 'classroom' => $Classroom]);
+            }
 
+            toastr()->success('Data has been updated successfully');
+            return redirect()->route('Classrooms.index');
         } catch (\Exception $e) {
+            if ($request->ajax()) {
+                return response()->json(['error' => $e->getMessage()], 422);
+            }
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
     }
@@ -125,12 +138,23 @@ class ClassroomController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function destroy(Request $request)
+    public function destroy(Request $request, $id)
     {
-        $Classrooms = Classroom::findOrFail($request->id)->delete();
+        try {
+            Classroom::findOrFail($id)->delete();
 
-        toastr()->error(__('messages.Delete'),' ');
-        return redirect()->route('Classrooms.index');
+            if ($request->ajax()) {
+                return response()->json(['message' => 'Classroom deleted successfully.']);
+            }
+
+            toastr()->error('Data has been deleted successfully');
+            return redirect()->route('Classrooms.index');
+        } catch (\Exception $e) {
+            if ($request->ajax()) {
+                return response()->json(['error' => $e->getMessage()], 422);
+            }
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
 

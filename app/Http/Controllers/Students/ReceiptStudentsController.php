@@ -45,14 +45,13 @@ class ReceiptStudentsController extends Controller
     }
 
 
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        return $this->Receipt->update($request);
+        return $this->Receipt->update($request, $id);
     }
 
-
-    public function destroy(Request $request)
+    public function destroy(Request $request, $id)
     {
-        return $this->Receipt->destroy($request);
+        return $this->Receipt->destroy($request, $id);
     }
 }

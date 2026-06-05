@@ -83,3 +83,90 @@
     @toastr_js
     @toastr_render
 @endsection
+@push('js')
+    <script>
+        $(function () {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            var editModal = $('#editGradeModal');
+            var deleteModal = $('#deleteGradeModal');
+            var currentDeleteId = null;
+
+            $('.btn-grade-edit').on('click', function () {
+                var id = $(this).data('id');
+
+                $.getJSON('/grades/edit/' + id, function (grade) {
+                    $('#edit_grade_id').val(grade.id);
+                    $('#edit_Name').val(grade.Name);
+                    $('#edit_Notes').val(grade.Notes);
+                    editModal.modal('show');
+                }).fail(function () {
+                    toastr.error('Unable to load grade data.');
+                });
+            });
+
+            $('#gradeEditForm').on('submit', function (e) {
+                e.preventDefault();
+                var id = $('#edit_grade_id').val();
+                var payload = {
+                    Name: $('#edit_Name').val(),
+                    Notes: $('#edit_Notes').val()
+                };
+
+                $.ajax({
+                    url: '/grades/' + id,
+                    method: 'PATCH',
+                    data: payload,
+                    success: function (response) {
+                        editModal.modal('hide');
+                        var row = $('button.btn-grade-edit[data-id="' + id + '"]').closest('tr');
+                        row.find('td').eq(1).text(response.grade.Name);
+                        row.find('td').eq(2).text(response.grade.Notes);
+                        toastr.success(response.message || 'Grade updated successfully.');
+                    },
+                    error: function (xhr) {
+                        var msg = 'Update failed.';
+                        if (xhr.responseJSON && xhr.responseJSON.error) {
+                            msg = xhr.responseJSON.error;
+                        }
+                        toastr.error(msg);
+                    }
+                });
+            });
+
+            $('.btn-grade-delete').on('click', function () {
+                currentDeleteId = $(this).data('id');
+                $('#delete_grade_name').text($(this).data('name'));
+                deleteModal.modal('show');
+            });
+
+            $('#confirmDeleteGrade').on('click', function () {
+                if (!currentDeleteId) {
+                    return;
+                }
+
+                $.ajax({
+                    url: '/grades/' + currentDeleteId,
+                    method: 'DELETE',
+                    success: function (response) {
+                        deleteModal.modal('hide');
+                        $('button.btn-grade-delete[data-id="' + currentDeleteId + '"]').closest('tr').remove();
+                        currentDeleteId = null;
+                        toastr.success(response.message || 'Grade deleted successfully.');
+                    },
+                    error: function (xhr) {
+                        var msg = 'Delete failed.';
+                        if (xhr.responseJSON && xhr.responseJSON.error) {
+                            msg = xhr.responseJSON.error;
+                        }
+                        toastr.error(msg);
+                    }
+                });
+            });
+        });
+    </script>
+@endpush

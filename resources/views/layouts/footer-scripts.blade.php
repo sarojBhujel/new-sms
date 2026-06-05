@@ -30,19 +30,17 @@
 
 <script>
     $(document).ready(function() {
-        $('#datatable').DataTable();
-    } );
+        // Initialize DataTables for all tables with id="datatable" except those marked with .no-datatable
+        if ($('#datatable').length && !$('#datatable').hasClass('no-datatable')) {
+            $('#datatable').DataTable();
+        }
+    });
 </script>
 
 
 
-@if (App::getLocale() == 'en')
     <script src="{{ URL::asset('assets/js/bootstrap-datatables/en/jquery.dataTables.min.js') }}"></script>
     <script src="{{ URL::asset('assets/js/bootstrap-datatables/en/dataTables.bootstrap4.min.js') }}"></script>
-@else
-    <script src="{{ URL::asset('assets/js/bootstrap-datatables/ar/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ URL::asset('assets/js/bootstrap-datatables/ar/dataTables.bootstrap4.min.js') }}"></script>
-@endif
 
 <script>
     function CheckAll(className, elem) {

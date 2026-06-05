@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Nationalitie extends Model
 {
-    use HasFactory, HasTranslations;
+    use HasFactory;
 
     public $translatable  = ['Name'];
 

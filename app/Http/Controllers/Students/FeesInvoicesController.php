@@ -40,14 +40,13 @@ class FeesInvoicesController extends Controller
     }
 
 
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        return $this->Fees_Invoices->update($request);
+        return $this->Fees_Invoices->update($request, $id);
     }
 
-
-    public function destroy(Request $request)
+    public function destroy(Request $request, $id)
     {
-        return $this->Fees_Invoices->destroy($request);
+        return $this->Fees_Invoices->destroy($request, $id);
     }
 }

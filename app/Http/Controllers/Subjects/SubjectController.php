@@ -45,13 +45,13 @@ class SubjectController extends Controller
         return $this->Subject->edit($id);
     }
 
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        return $this->Subject->update($request);
+        return $this->Subject->update($request, $id);
     }
 
-    public function destroy(Request $request)
+    public function destroy(Request $request, $id)
     {
-        return $this->Subject->destroy($request);
+        return $this->Subject->destroy($request, $id);
     }
 }

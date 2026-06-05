@@ -52,8 +52,8 @@ class PromotionController extends Controller
     }
 
 
-    public function destroy(Request $request)
+    public function destroy(Request $request, $id)
     {
-        return $this->Promotion->destroy($request);
+        return $this->Promotion->destroy($request, $id);
     }
 }

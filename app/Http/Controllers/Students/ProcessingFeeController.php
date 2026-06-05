@@ -46,14 +46,13 @@ class ProcessingFeeController extends Controller
     }
 
 
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        return $this->Processing->update($request);
+        return $this->Processing->update($request, $id);
     }
 
-
-    public function destroy(Request $request)
+    public function destroy(Request $request, $id)
     {
-        return $this->Processing->destroy($request);
+        return $this->Processing->destroy($request, $id);
     }
 }

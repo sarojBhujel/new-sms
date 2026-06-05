@@ -16,7 +16,37 @@ class GradeController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            return response()->json(Grade::select(['id', 'Name', 'Notes'])->paginate(10));
+            $query = Grade::query();
+            
+            // Search
+            if (request()->has('search') && !empty(request()->input('search.value'))) {
+                $search = request()->input('search.value');
+                $query->where('Name', 'like', "%{$search}%")
+                      ->orWhere('Notes', 'like', "%{$search}%");
+            }
+
+            $recordsTotal = Grade::count();
+            $recordsFiltered = $query->count();
+
+            // Sorting
+            $orderColumn = request()->input('order.0.column', 0);
+            $orderDir = request()->input('order.0.dir', 'asc');
+            $columns = ['id', 'Name', 'Notes', 'id'];
+            if (isset($columns[$orderColumn])) {
+                $query->orderBy($columns[$orderColumn], $orderDir);
+            }
+
+            // Pagination
+            $start = request()->input('start', 0);
+            $length = request()->input('length', 10);
+            $data = $query->skip($start)->take($length)->get();
+
+            return response()->json([
+                'draw' => intval(request()->input('draw', 1)),
+                'recordsTotal' => $recordsTotal,
+                'recordsFiltered' => $recordsFiltered,
+                'data' => $data
+            ]);
         }
 
         $Grades = Grade::all();
@@ -50,12 +80,13 @@ class GradeController extends Controller
 
     public function show($id)
     {
-        $Grade = Grade::findOrFail($id);
-        return response()->json($Grade);
+        
     }
 
     public function edit($id)
     {
+        $Grade = Grade::findOrFail($id);
+        return response()->json($Grade);
     }
 
     public function update(StoreGrades $request, $id)

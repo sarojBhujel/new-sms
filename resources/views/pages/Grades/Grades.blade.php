@@ -43,7 +43,7 @@
                 <br><br>
 
                 <div class="table-responsive">
-                    <table id="datatable" class="table p-0 table-hover table-sm table-bordered" data-page-length="50"
+                    <table id="gradesTable" class="table p-0 table-hover table-sm table-bordered no-datatable"
                         style="text-align: center">
                         <thead>
                             <tr>
@@ -54,26 +54,6 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php $i = 0; ?>
-                            @foreach ($Grades as $Grade)
-                                <tr>
-                                    <?php $i++; ?>
-                                    <td>{{ $i }}</td>
-                                    <td>{{ $Grade->Name }}</td>
-                                    <td>{{ $Grade->Notes }}</td>
-                                    <td>
-                                        <button type="button" class="btn btn-info btn-sm btn-grade-edit"
-                                            data-id="{{ $Grade->id }}"
-                                            title="{{ trans('Grades_trans.Edit') }}"><i
-                                                class="fa fa-edit"></i></button>
-                                        <button type="button" class="btn btn-danger btn-sm btn-grade-delete"
-                                            data-id="{{ $Grade->id }}"
-                                            data-name="{{ $Grade->Name }}"
-                                            title="{{ trans('Grades_trans.Delete') }}"><i
-                                                class="fa fa-trash"></i></button>
-                                    </td>
-                                </tr>
-                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -206,10 +186,62 @@
             var editModal = $('#editGradeModal');
             var deleteModal = $('#deleteGradeModal');
             var currentDeleteId = null;
+            var gradesTable;
 
-            $('.btn-grade-edit').on('click', function () {
+            // Initialize DataTables with server-side processing
+            gradesTable = $('#gradesTable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: '/Grades',
+                    type: 'GET'
+                },
+                columns: [
+                    { 
+                        data: 'id', 
+                        render: function(data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        },
+                        orderable: false,
+                        searchable: false
+                    },
+                    { data: 'Name' },
+                    { data: 'Notes' },
+                    {
+                        data: 'id',
+                        render: function(data, type, row) {
+                            return `<button type="button" class="btn btn-info btn-sm btn-grade-edit" data-id="${row.id}" title="Edit">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <button type="button" class="btn btn-danger btn-sm btn-grade-delete" data-id="${row.id}" data-name="${row.Name}" title="Delete">
+                                <i class="fa fa-trash"></i>
+                            </button>`;
+                        },
+                        orderable: false,
+                        searchable: false
+                    }
+                ],
+                pageLength: 10,
+                order: [[1, 'asc']],
+                language: {
+                    processing: 'Processing...',
+                    lengthMenu: 'Show _MENU_ entries',
+                    zeroRecords: 'No matching records found',
+                    info: 'Showing _START_ to _END_ of _TOTAL_ entries',
+                    infoEmpty: 'Showing 0 to 0 of 0 entries',
+                    infoFiltered: '(filtered from _MAX_ total entries)',
+                    paginate: {
+                        first: 'First',
+                        last: 'Last',
+                        next: 'Next',
+                        previous: 'Previous'
+                    }
+                }
+            });
+
+            // Edit button click
+            $(document).on('click', '.btn-grade-edit', function () {
                 var id = $(this).data('id');
-
                 $.getJSON('/grades/edit/' + id, function (grade) {
                     $('#edit_grade_id').val(grade.id);
                     $('#edit_Name').val(grade.Name);
@@ -220,6 +252,7 @@
                 });
             });
 
+            // Edit form submission
             $('#gradeEditForm').on('submit', function (e) {
                 e.preventDefault();
                 var id = $('#edit_grade_id').val();
@@ -234,10 +267,8 @@
                     data: payload,
                     success: function (response) {
                         editModal.modal('hide');
-                        var row = $('button.btn-grade-edit[data-id="' + id + '"]').closest('tr');
-                        row.find('td').eq(1).text(response.grade.Name);
-                        row.find('td').eq(2).text(response.grade.Notes);
                         toastr.success(response.message || 'Grade updated successfully.');
+                        gradesTable.ajax.reload();
                     },
                     error: function (xhr) {
                         var msg = 'Update failed.';
@@ -249,12 +280,14 @@
                 });
             });
 
-            $('.btn-grade-delete').on('click', function () {
+            // Delete button click
+            $(document).on('click', '.btn-grade-delete', function () {
                 currentDeleteId = $(this).data('id');
                 $('#delete_grade_name').text($(this).data('name'));
                 deleteModal.modal('show');
             });
 
+            // Delete confirmation
             $('#confirmDeleteGrade').on('click', function () {
                 if (!currentDeleteId) {
                     return;
@@ -265,9 +298,9 @@
                     method: 'DELETE',
                     success: function (response) {
                         deleteModal.modal('hide');
-                        $('button.btn-grade-delete[data-id="' + currentDeleteId + '"]').closest('tr').remove();
                         currentDeleteId = null;
                         toastr.success(response.message || 'Grade deleted successfully.');
+                        gradesTable.ajax.reload();
                     },
                     error: function (xhr) {
                         var msg = 'Delete failed.';

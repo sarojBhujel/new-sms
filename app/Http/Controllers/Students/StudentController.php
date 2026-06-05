@@ -17,9 +17,13 @@ class StudentController extends Controller
         $this->Student = $Student;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return $this -> Student ->Get_Student();
+        if (request()->ajax()) {
+            return response()->json($this->Student->Get_Student());
+        }
+        $students = $this->Student->Get_Student();
+        return view('pages.Students.index', compact('students'));
     }
 
 
@@ -31,7 +35,6 @@ class StudentController extends Controller
 
     public function store(StoreStudents $request)
     {
-        dd($request->all());
         return $this->Student->Store_Student($request);
     }
 
@@ -48,15 +51,15 @@ class StudentController extends Controller
     }
 
 
-    public function update(StoreStudents $request)
+    public function update(StoreStudents $request, $id)
     {
-        return $this->Student->Update_Student($request);
+        return $this->Student->Update_Student($request, $id);
     }
 
 
-    public function destroy(Request $request)
+    public function destroy(Request $request, $id)
     {
-        return $this->Student->Delete_Student($request);
+        return $this->Student->Delete_Student($request, $id);
     }
 
     public function Get_Classrooms($id)
