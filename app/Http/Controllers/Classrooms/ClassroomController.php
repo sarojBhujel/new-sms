@@ -107,7 +107,7 @@ class ClassroomController extends Controller
 
             $Classrooms->update([
 
-                'Name_Class' => [$request->Name_en],
+                'Name_Class' => [$request->Name],
                 'Grade_id' => $request->Grade_id,
             ]);
 

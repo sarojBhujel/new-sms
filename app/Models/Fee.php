@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Translatable\HasTranslations;
+#use Spatie\Translatable\HasTranslations;
+
+
 
 class Fee extends Model
 {
-    use HasTranslations;
+  #  use HasTranslations;
     public $translatable = ['title'];
     protected $fillable = ['title', 'amount', 'Grade_id', 'Classroom_id', 'year', 'description', 'Fee_type'];
 

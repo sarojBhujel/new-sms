@@ -8,7 +8,7 @@ return [
     'Email'=>'Email',
     'Password'=>'Password',
     'Name_ar'=>'Name_ar',
-    'Name_en'=>'Name_en',
+    'Name'=>'Name',
     'specialization'=>'specialization',
     'Gender'=>'Gender',
     'Joining_Date'=>'Joining_Date',

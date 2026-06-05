@@ -4,13 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Translatable\HasTranslations;
+#use Spatie\Translatable\HasTranslations;
+
+
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Teacher extends Authenticatable
 {
     use HasFactory;
-    use HasTranslations;
+  #  use HasTranslations;
 
     public $translatable = ['name'];
     protected $guarded = [];

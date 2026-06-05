@@ -45,7 +45,7 @@
                                                 </div>
 
                                                 <div class="col">
-                                                    <label for="Name_en" class="mr-sm-2">Fee Type</label>
+                                                    <label for="Name" class="mr-sm-2">Fee Type</label>
                                                     <div class="box">
                                                         <select class="fancyselect" name="fee_id" required>
                                                             <option value="">-- اختار من القائمة --</option>
@@ -58,7 +58,7 @@
                                                 </div>
 
                                                 <div class="col">
-                                                    <label for="Name_en" class="mr-sm-2">المبلغ</label>
+                                                    <label for="Name" class="mr-sm-2">المبلغ</label>
                                                     <div class="box">
                                                         <select class="fancyselect" name="amount" required>
                                                             <option value="">-- اختار من القائمة --</option>
@@ -77,7 +77,7 @@
                                                 </div>
 
                                                 <div class="col">
-                                                    <label for="Name_en" class="mr-sm-2">{{ trans('My_Classes_trans.Processes') }}:</label>
+                                                    <label for="Name" class="mr-sm-2">{{ trans('My_Classes_trans.Processes') }}:</label>
                                                     <input class="btn btn-danger btn-block" data-repeater-delete type="button" value="{{ trans('My_Classes_trans.delete_row') }}" />
                                                 </div>
                                             </div>

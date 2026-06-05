@@ -115,11 +115,11 @@ class ChildrenController extends Controller
         $information = My_Parent::findorFail($id);
 
         if (!empty($request->password)) {
-            $information->Name_Father = $request->Name_en;
+            $information->Name_Father = $request->Name;
             $information->password = Hash::make($request->password);
             $information->save();
         } else {
-            $information->Name_Father = $request->Name_en;
+            $information->Name_Father = $request->Name;
             $information->save();
         }
         toastr()->success('Data has been Update successfully');

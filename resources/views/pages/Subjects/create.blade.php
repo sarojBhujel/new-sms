@@ -36,7 +36,7 @@
                             <div class="form-row">
                                 <div class="col">
                                     <label for="title">Subject Name (English)</label>
-                                    <input type="text" name="Name_en" class="form-control">
+                                    <input type="text" name="Name" class="form-control">
                                 </div>
                             </div>
                             <br>

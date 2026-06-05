@@ -24,8 +24,7 @@ class StoreFeesRequest extends FormRequest
     public function rules()
     {
         return [
-            'title_ar' => 'required',
-            'title_en' => 'required',
+            'title' => 'required|string|max:255',
             'amount' => 'required|numeric',
             'Grade_id' => 'required|integer',
             'Classroom_id' => 'required|integer',
@@ -36,8 +35,7 @@ class StoreFeesRequest extends FormRequest
     public function messages()
     {
         return [
-            'title_ar.required' => trans('validation.required'),
-            'title_en.required' => trans('validation.unique'),
+            'title.required' =>'Title is required',
             'Password.required' => trans('validation.required'),
             'amount.required' => trans('validation.required'),
             'amount.numeric' => trans('validation.numeric'),

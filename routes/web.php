@@ -41,6 +41,9 @@ Route::group(
         //==============================Grades============================
         Route::group(['namespace' => 'App\Http\Controllers\Grades'], function () {
             Route::resource('Grades', 'GradeController');
+            Route::get('grades/edit/{id}', 'GradeController@edit')->name('grades.edit.ajax');
+            Route::patch('grades/{id}', 'GradeController@update')->name('grades.update.ajax');
+            Route::delete('grades/{id}', 'GradeController@destroy')->name('grades.destroy.ajax');
         });
 
         //==============================Classrooms============================

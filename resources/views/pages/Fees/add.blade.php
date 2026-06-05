@@ -32,14 +32,10 @@
                     <form method="post" action="{{ route('Fees.store') }}" autocomplete="off">
                         @csrf
                         <div class="form-row">
-                            <div class="form-group col">
-                                <label for="inputEmail4">Name (Arabic)</label>
-                                <input type="text" value="{{ old('title_ar') }}" name="title_ar" class="form-control">
-                            </div>
 
                             <div class="form-group col">
-                                <label for="inputEmail4">Name (English)</label>
-                                <input type="text" value="{{ old('title_en') }}" name="title_en" class="form-control">
+                                <label for="inputEmail4">Name </label>
+                                <input type="text" value="{{ old('title') }}" name="title" class="form-control">
                             </div>
 
 

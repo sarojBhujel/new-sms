@@ -36,8 +36,8 @@
                             <div class="form-row">
                                 <div class="col">
                                     <label for="title">Subject Name</label>
-                                    <input type="text" name="Name_en"
-                                        value="{{ $subject->getTranslation('name', 'en') }}" class="form-control">
+                                    <input type="text" name="Name"
+                                        value="{{ $subject->name}}" class="form-control">
                                 </div>
                             </div>
                             <br>
@@ -46,7 +46,7 @@
                                 <div class="form-group col">
                                     <label for="inputState">Grade</label>
                                     <select class="custom-select my-1 mr-sm-2" name="Grade_id">
-                                        <option selected disabled>{{ trans('Parent_trans.Choose') }}...</option>
+                                        <option selected disabled>Choose Parent ...</option>
                                         @foreach ($grades as $grade)
                                             <option value="{{ $grade->id }}"
                                                 {{ $grade->id == $subject->grade_id ? 'selected' : '' }}>

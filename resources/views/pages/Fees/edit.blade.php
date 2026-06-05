@@ -33,15 +33,10 @@
                         @method('PUT')
                         @csrf
                         <div class="form-row">
-                            <div class="form-group col">
-                                <label for="inputEmail4">Name (Arabic)</label>
-                                <input type="text" value="{{$fee->getTranslation('title','ar')}}" name="title_ar" class="form-control">
-                                <input type="hidden" value="{{$fee->id}}" name="id" class="form-control">
-                            </div>
 
                             <div class="form-group col">
-                                <label for="inputEmail4">Name (English)</label>
-                                <input type="text" value="{{$fee->getTranslation('title','en')}}" name="title_en" class="form-control">
+                                <label for="inputEmail4">Name</label>
+                                <input type="text" value="{{$fee->title}}" name="title" class="form-control">
                             </div>
 
 

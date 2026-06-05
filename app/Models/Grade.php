@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Translatable\HasTranslations;
+#use Spatie\Translatable\HasTranslations;
+
+
 
 class Grade extends Model
 {
 
-    use HasTranslations;
+  #  use HasTranslations;
     public $translatable  = ['Name'];
 
     protected $fillable=['Name','Notes'];

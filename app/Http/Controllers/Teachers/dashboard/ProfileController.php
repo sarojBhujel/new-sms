@@ -23,11 +23,11 @@ class ProfileController extends Controller
         $information = Teacher::findorFail($id);
 
         if (!empty($request->password)) {
-            $information->name = ['en' => $request->Name_en, 'ar' => $request->Name_ar];
+            $information->name = ['en' => $request->Name, 'ar' => $request->Name_ar];
             $information->password = Hash::make($request->password);
             $information->save();
         } else {
-            $information->name = ['en' => $request->Name_en, 'ar' => $request->Name_ar];
+            $information->name = ['en' => $request->Name, 'ar' => $request->Name_ar];
             $information->save();
         }
         toastr()->success('Data has been Update successfully');

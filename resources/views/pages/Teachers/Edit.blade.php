@@ -55,16 +55,9 @@
 
                             <div class="form-row">
                                 <div class="col">
-                                    <label for="title">{{trans('Teacher_trans.Name_ar')}}</label>
-                                    <input type="text" name="Name_ar" value="{{ $Teachers->getTranslation('Name', 'ar') }}" class="form-control">
-                                    @error('Name_ar')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="col">
-                                    <label for="title">{{trans('Teacher_trans.Name_en')}}</label>
-                                    <input type="text" name="Name_en" value="{{ $Teachers->getTranslation('Name', 'en') }}" class="form-control">
-                                    @error('Name_en')
+                                    <label for="title">{{trans('Teacher_trans.Name')}}</label>
+                                    <input type="text" name="Name" value="{{ $Teachers->Name }}" class="form-control">
+                                    @error('Name')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
                                 </div>

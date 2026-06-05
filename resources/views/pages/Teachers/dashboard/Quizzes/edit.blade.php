@@ -43,7 +43,7 @@
 
                                     <div class="col">
                                         <label for="title">اسم الاختبار باللغة الانجليزية</label>
-                                        <input type="text" name="Name_en" value="{{$quizz->getTranslation('name','en')}}" class="form-control">
+                                        <input type="text" name="Name" value="{{$quizz->getTranslation('name','en')}}" class="form-control">
                                     </div>
                                 </div>
                                 <br>

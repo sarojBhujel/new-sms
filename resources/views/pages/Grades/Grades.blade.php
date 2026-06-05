@@ -62,122 +62,87 @@
                                     <td>{{ $Grade->Name }}</td>
                                     <td>{{ $Grade->Notes }}</td>
                                     <td>
-                                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                            data-target="#edit{{ $Grade->id }}"
+                                        <button type="button" class="btn btn-info btn-sm btn-grade-edit"
+                                            data-id="{{ $Grade->id }}"
                                             title="{{ trans('Grades_trans.Edit') }}"><i
                                                 class="fa fa-edit"></i></button>
-                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                            data-target="#delete{{ $Grade->id }}"
+                                        <button type="button" class="btn btn-danger btn-sm btn-grade-delete"
+                                            data-id="{{ $Grade->id }}"
+                                            data-name="{{ $Grade->Name }}"
                                             title="{{ trans('Grades_trans.Delete') }}"><i
                                                 class="fa fa-trash"></i></button>
                                     </td>
                                 </tr>
-
-                                <!-- edit_modal_Grade -->
-                                <div class="modal fade" id="edit{{ $Grade->id }}" tabindex="-1" role="dialog"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 style="font-family: 'Cairo', sans-serif;" class="modal-title"
-                                                    id="exampleModalLabel">
-                                                    {{ trans('Grades_trans.edit_Grade') }}
-                                                </h5>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                    aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <!-- add_form -->
-                                                <form action="{{ route('Grades.update', 'test') }}" method="post">
-                                                    {{ method_field('patch') }}
-                                                    @csrf
-                                                    <div class="row">
-                                                        <div class="col">
-                                                            <label for="Name"
-                                                                class="mr-sm-2">{{ trans('Grades_trans.stage_name_ar') }}
-                                                                :</label>
-                                                            <input id="Name" type="text" name="Name"
-                                                                class="form-control"
-                                                                value="{{ $Grade->Name }}"
-                                                                required>
-                                                            <input id="id" type="hidden" name="id"
-                                                                class="form-control" value="{{ $Grade->id }}">
-                                                        </div>
-                                                        <div class="col">
-                                                            <label for="Name_en"
-                                                                class="mr-sm-2">{{ trans('Grades_trans.stage_name_en') }}
-                                                                :</label>
-                                                            <input type="text" class="form-control"
-                                                                value="{{ $Grade->getTranslation('Name', 'en') }}"
-                                                                name="Name_en" required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label
-                                                            for="exampleFormControlTextarea1">{{ trans('Grades_trans.Notes') }}
-                                                            :</label>
-                                                        <textarea class="form-control" name="Notes" id="exampleFormControlTextarea1" rows="3">{{ $Grade->Notes }}</textarea>
-                                                    </div>
-                                                    <br><br>
-
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-dismiss="modal">{{ trans('Grades_trans.Close') }}</button>
-                                                        <button type="submit"
-                                                            class="btn btn-success">{{ trans('Grades_trans.submit') }}</button>
-                                                    </div>
-                                                </form>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- delete_modal_Grade -->
-                                <div class="modal fade" id="delete{{ $Grade->id }}" tabindex="-1" role="dialog"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 style="font-family: 'Cairo', sans-serif;" class="modal-title"
-                                                    id="exampleModalLabel">
-                                                    {{ trans('Grades_trans.delete_Grade') }}
-                                                </h5>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                    aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form action="{{ route('Grades.destroy', 'test') }}" method="post">
-                                                    {{ method_field('Delete') }}
-                                                    @csrf
-                                                    {{ trans('Grades_trans.Warning_Grade') }}
-                                                    <input id="id" type="hidden" name="id"
-                                                        class="form-control" value="{{ $Grade->id }}">
-                                                    <input type="text" class="form-control"
-                                                        value="{{ $Grade->Name }}" name="Name_en" required readonly>
-
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-dismiss="modal">{{ trans('Grades_trans.Close') }}</button>
-                                                        <button type="submit"
-                                                            class="btn btn-danger">{{ trans('Grades_trans.Delete') }}</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             @endforeach
+                        </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- edit_modal_Grade -->
+    <div class="modal fade" id="editGradeModal" tabindex="-1" role="dialog" aria-labelledby="editGradeLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 style="font-family: 'Cairo', sans-serif;" class="modal-title" id="editGradeLabel">
+                        {{ trans('Grades_trans.edit_Grade') }}
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="gradeEditForm">
+                        @csrf
+                        @method('PATCH')
+                        <input type="hidden" id="edit_grade_id" name="id">
+                        <div class="row">
+                            <div class="col">
+                                <label for="edit_Name" class="mr-sm-2">{{ trans('Grades_trans.Name') }} :</label>
+                                <input id="edit_Name" type="text" class="form-control" name="Name" required>
+                            </div>
+                        </div>
+                        <div class="form-group mt-3">
+                            <label for="edit_Notes">{{ trans('Grades_trans.Notes') }} :</label>
+                            <textarea class="form-control" id="edit_Notes" name="Notes" rows="3"></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('Grades_trans.Close') }}</button>
+                            <button type="submit" class="btn btn-success">{{ trans('Grades_trans.submit') }}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- delete_modal_Grade -->
+    <div class="modal fade" id="deleteGradeModal" tabindex="-1" role="dialog" aria-labelledby="deleteGradeLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 style="font-family: 'Cairo', sans-serif;" class="modal-title" id="deleteGradeLabel">
+                        {{ trans('Grades_trans.delete_Grade') }}
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>{{ trans('Grades_trans.Warning_Grade') }}</p>
+                    <p><strong id="delete_grade_name"></strong></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('Grades_trans.Close') }}</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteGrade">{{ trans('Grades_trans.Delete') }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- add_modal_Grade -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -229,3 +194,90 @@
 @toastr_js
 @toastr_render
 @endsection
+@push('js')
+    <script>
+        $(function () {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            var editModal = $('#editGradeModal');
+            var deleteModal = $('#deleteGradeModal');
+            var currentDeleteId = null;
+
+            $('.btn-grade-edit').on('click', function () {
+                var id = $(this).data('id');
+
+                $.getJSON('/grades/edit/' + id, function (grade) {
+                    $('#edit_grade_id').val(grade.id);
+                    $('#edit_Name').val(grade.Name);
+                    $('#edit_Notes').val(grade.Notes);
+                    editModal.modal('show');
+                }).fail(function () {
+                    toastr.error('Unable to load grade data.');
+                });
+            });
+
+            $('#gradeEditForm').on('submit', function (e) {
+                e.preventDefault();
+                var id = $('#edit_grade_id').val();
+                var payload = {
+                    Name: $('#edit_Name').val(),
+                    Notes: $('#edit_Notes').val()
+                };
+
+                $.ajax({
+                    url: '/grades/' + id,
+                    method: 'PATCH',
+                    data: payload,
+                    success: function (response) {
+                        editModal.modal('hide');
+                        var row = $('button.btn-grade-edit[data-id="' + id + '"]').closest('tr');
+                        row.find('td').eq(1).text(response.grade.Name);
+                        row.find('td').eq(2).text(response.grade.Notes);
+                        toastr.success(response.message || 'Grade updated successfully.');
+                    },
+                    error: function (xhr) {
+                        var msg = 'Update failed.';
+                        if (xhr.responseJSON && xhr.responseJSON.error) {
+                            msg = xhr.responseJSON.error;
+                        }
+                        toastr.error(msg);
+                    }
+                });
+            });
+
+            $('.btn-grade-delete').on('click', function () {
+                currentDeleteId = $(this).data('id');
+                $('#delete_grade_name').text($(this).data('name'));
+                deleteModal.modal('show');
+            });
+
+            $('#confirmDeleteGrade').on('click', function () {
+                if (!currentDeleteId) {
+                    return;
+                }
+
+                $.ajax({
+                    url: '/grades/' + currentDeleteId,
+                    method: 'DELETE',
+                    success: function (response) {
+                        deleteModal.modal('hide');
+                        $('button.btn-grade-delete[data-id="' + currentDeleteId + '"]').closest('tr').remove();
+                        currentDeleteId = null;
+                        toastr.success(response.message || 'Grade deleted successfully.');
+                    },
+                    error: function (xhr) {
+                        var msg = 'Delete failed.';
+                        if (xhr.responseJSON && xhr.responseJSON.error) {
+                            msg = xhr.responseJSON.error;
+                        }
+                        toastr.error(msg);
+                    }
+                });
+            });
+        });
+    </script>
+@endpush

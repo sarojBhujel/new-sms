@@ -116,24 +116,14 @@
                                                     {{ method_field('patch') }}
                                                     @csrf
                                                     <div class="row">
+                                                        
                                                         <div class="col">
                                                             <label for="Name"
-                                                                class="mr-sm-2">{{ trans('My_Classes_trans.Name_class') }}
-                                                                :</label>
-                                                            <input id="Name" type="text" name="Name"
-                                                                class="form-control"
-                                                                value="{{ $My_Class->getTranslation('Name_Class', 'ar') }}"
-                                                                required>
-                                                            <input id="id" type="hidden" name="id"
-                                                                class="form-control" value="{{ $My_Class->id }}">
-                                                        </div>
-                                                        <div class="col">
-                                                            <label for="Name_en"
-                                                                class="mr-sm-2">{{ trans('My_Classes_trans.Name_class_en') }}
+                                                                class="mr-sm-2">Class Name
                                                                 :</label>
                                                             <input type="text" class="form-control"
-                                                                value="{{ $My_Class->getTranslation('Name_Class', 'en') }}"
-                                                                name="Name_en" required>
+                                                                value="{{ $My_Class->Name_Class }}"
+                                                                name="Name" required>
                                                         </div>
                                                     </div><br>
                                                     <div class="form-group">
@@ -244,7 +234,7 @@
 
 
                                             <div class="col">
-                                                <label for="Name_en"
+                                                <label for="Name"
                                                     class="mr-sm-2">{{ trans('My_Classes_trans.Name_Grade') }}
                                                     :</label>
 
@@ -260,7 +250,7 @@
                                             </div>
 
                                             <div class="col">
-                                                <label for="Name_en"
+                                                <label for="Name"
                                                     class="mr-sm-2">{{ trans('My_Classes_trans.Processes') }}
                                                     :</label>
                                                 <input class="btn btn-danger btn-block" data-repeater-delete

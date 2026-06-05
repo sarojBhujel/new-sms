@@ -41,7 +41,7 @@
 
                                     <div class="col">
                                         <label for="title">اسم الاختبار باللغة الانجليزية</label>
-                                        <input type="text" name="Name_en" class="form-control">
+                                        <input type="text" name="Name" class="form-control">
                                     </div>
                                 </div>
                                 <br>

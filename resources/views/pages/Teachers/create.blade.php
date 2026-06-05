@@ -62,9 +62,9 @@
                                     @enderror
                                 </div>
                                 <div class="col">
-                                    <label for="title">{{trans('Teacher_trans.Name_en')}}</label>
-                                    <input type="text" name="Name_en" class="form-control">
-                                    @error('Name_en')
+                                    <label for="title">{{trans('Teacher_trans.Name')}}</label>
+                                    <input type="text" name="Name" class="form-control">
+                                    @error('Name')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
                                 </div>

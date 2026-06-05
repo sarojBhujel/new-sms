@@ -1,4 +1,4 @@
-FROM php:8.2-apache
+FROM php:8.2-fpm
 
 WORKDIR /var/www/html
 
@@ -20,8 +20,6 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN a2enmod rewrite headers
-
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 COPY . .
@@ -31,15 +29,15 @@ RUN mkdir -p \
     storage/framework/sessions \
     storage/framework/views \
     storage/logs \
-    bootstrap/cache \
-    && chown -R www-data:www-data /var/www/html \
-    && chmod -R 775 storage bootstrap/cache
+    bootstrap/cache
 
-RUN composer install --no-interaction --prefer-dist --optimize-autoloader
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader --no-scripts
 
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 775 storage bootstrap/cache
 
-EXPOSE 80
-
-CMD ["apache2-foreground"]
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
+CMD ["php-fpm"]

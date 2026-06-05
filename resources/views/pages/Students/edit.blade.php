@@ -37,8 +37,8 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>{{trans('Students_trans.name_en')}} : <span class="text-danger">*</span></label>
-                                    <input value="{{$Students->getTranslation('name','en')}}" class="form-control" name="name" type="text" >
+                                    <label>Student Name : <span class="text-danger">*</span></label>
+                                    <input value="{{$Students->name}}" class="form-control" name="name" type="text" >
                                 </div>
                             </div>
                         </div>
