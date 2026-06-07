@@ -19,8 +19,8 @@ class GenderTableSeeder extends Seeder
         DB::table('genders')->delete();
 
         $genders = [
-            ['en' => 'Male', 'ar' => 'ذكر'],
-            ['en' => 'Female', 'ar' => 'انثي'],
+           'Male',
+           'Female', 
 
         ];
         foreach ($genders as $ge) {

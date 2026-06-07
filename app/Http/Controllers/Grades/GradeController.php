@@ -49,8 +49,7 @@ class GradeController extends Controller
             ]);
         }
 
-        $Grades = Grade::all();
-        return view('pages.Grades.Grades', compact('Grades'));
+        return view('pages.Grades.Grades');
     }
 
 

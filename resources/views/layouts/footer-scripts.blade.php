@@ -28,19 +28,19 @@
 <script src="{{ URL::asset('assets/js/custom.js') }}"></script>
 
 
-<script>
+{{-- <script>
     $(document).ready(function() {
         // Initialize DataTables for all tables with id="datatable" except those marked with .no-datatable
         if ($('#datatable').length && !$('#datatable').hasClass('no-datatable')) {
             $('#datatable').DataTable();
         }
     });
-</script>
+</script> --}}
 
 
 
-    <script src="{{ URL::asset('assets/js/bootstrap-datatables/en/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ URL::asset('assets/js/bootstrap-datatables/en/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ URL::asset('assets/js/bootstrap-datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ URL::asset('assets/js/bootstrap-datatables/dataTables.bootstrap4.min.js') }}"></script>
 
 <script>
     function CheckAll(className, elem) {
@@ -56,8 +56,23 @@
             }
         }
     }
-</script>
 
+    function ajaxSetupCsrf() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    }
+
+    function showAjaxError(xhr, fallbackMessage) {
+        var message = fallbackMessage || 'Operation failed.';
+        if (xhr && xhr.responseJSON && xhr.responseJSON.error) {
+            message = xhr.responseJSON.error;
+        }
+        toastr.error(message);
+    }
+</script>
 
 <script>
     $(document).ready(function() {

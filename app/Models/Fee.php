@@ -3,29 +3,37 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-#use Spatie\Translatable\HasTranslations;
-
-
+use App\Models\Classroom;
+use App\Models\Grade;
+use App\Models\FeeNames;
 
 class Fee extends Model
 {
-  #  use HasTranslations;
     public $translatable = ['title'];
-    protected $fillable = ['title', 'amount', 'Grade_id', 'Classroom_id', 'year', 'description', 'Fee_type'];
 
-
-    // علاقة بين الرسوم الدراسية والمراحل الدراسية لجب اسم المرحلة
+    protected $fillable = [
+        'fee_name_id',
+        'title',
+        'amount',
+        'months',
+        'Grade_id',
+        'Classroom_id',
+        'description',
+        'Fee_type',
+    ];
 
     public function grade()
     {
-        return $this->belongsTo('App\Models\Grade', 'Grade_id');
+        return $this->belongsTo(Grade::class, 'Grade_id');
     }
-
-
-    // علاقة بين الصفوف الدراسية والرسوم الدراسية لجب اسم الصف
 
     public function classroom()
     {
-        return $this->belongsTo('App\Models\Classroom', 'Classroom_id');
+        return $this->belongsTo(Classroom::class, 'Classroom_id');
+    }
+
+    public function feeName()
+    {
+        return $this->belongsTo(FeeNames::class, 'fee_name_id');
     }
 }

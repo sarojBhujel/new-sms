@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFeesTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,15 @@ class CreateFeesTable extends Migration
      */
     public function up()
     {
-        Schema::create('fees', function (Blueprint $table) {
+        Schema::create('fee_names', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->string('name');
+            $table->string('code')->nullable();
             $table->decimal('amount',8,2);
+            $table->string('type')->nullable();
             $table->string('months')->nullable();
-            $table->foreignId('Grade_id')->references('id')->on('grades')->onDelete('cascade');
-            $table->foreignId('Classroom_id')->references('id')->on('classrooms')->onDelete('cascade');
-            $table->string('description')->nullable();
-            $table->integer('Fee_type');
+            $table->text('description')->nullable();
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }
@@ -33,6 +33,6 @@ class CreateFeesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fees');
+        Schema::dropIfExists('fee_names');
     }
-}
+};

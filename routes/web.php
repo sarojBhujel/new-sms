@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Classrooms\ClassroomController;
+use App\Http\Controllers\FeeNamesController;
 use App\Models\Classroom;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -72,6 +73,9 @@ Route::group(
 
             Route::resource('Teachers', 'TeacherController');
         });
+        Route::get('fee-names/classes', [FeeNamesController::class, 'classes'])->name('fee-names.classes');
+        Route::get('nepali-months', function () { return \App\Models\NepaliMonth::orderBy('sequence')->get(); })->name('nepali-months.index');
+        Route::resource('fee-names',FeeNamesController::class);
         //==============================Students============================
         Route::group(['namespace' => 'App\Http\Controllers\Students'], function () {
 

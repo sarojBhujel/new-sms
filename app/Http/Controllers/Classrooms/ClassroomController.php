@@ -20,20 +20,54 @@ class ClassroomController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            return response()->json(Classroom::with('grade')->select(['id', 'Name_Class', 'Grade_id'])->paginate(10));
+            $query = Classroom::with('grade');
+
+            if ($gradeId = request()->input('grade_id')) {
+                $query->where('Grade_id', $gradeId);
+            }
+
+            if (request()->has('search') && !empty(request()->input('search.value'))) {
+                $search = request()->input('search.value');
+                $query->where(function ($q) use ($search) {
+                    $q->where('Name_Class', 'like', "%{$search}%")
+                        ->orWhereHas('grade', function ($q2) use ($search) {
+                            $q2->where('Name', 'like', "%{$search}%");
+                        });
+                });
+            }
+
+            $recordsTotal = Classroom::count();
+            $recordsFiltered = $query->count();
+
+            $columns = ['id', 'id', 'Name_Class', 'Grade_id', 'id'];
+            $orderColumn = request()->input('order.0.column', 1);
+            $orderDir = request()->input('order.0.dir', 'asc');
+
+            if (isset($columns[$orderColumn])) {
+                if ($columns[$orderColumn] === 'Grade_id') {
+                    $query = Classroom::with('grade')
+                        ->join('grades', 'grades.id', '=', 'classrooms.Grade_id')
+                        ->select('classrooms.*')
+                        ->orderBy('grades.Name', $orderDir);
+                } else {
+                    $query->orderBy($columns[$orderColumn], $orderDir);
+                }
+            }
+
+            $start = request()->input('start', 0);
+            $length = request()->input('length', 10);
+            $data = $query->skip($start)->take($length)->get();
+
+            return response()->json([
+                'draw' => intval(request()->input('draw', 1)),
+                'recordsTotal' => $recordsTotal,
+                'recordsFiltered' => $recordsFiltered,
+                'data' => $data,
+            ]);
         }
 
-        $Grades = Grade::all();
-        $My_Classes = Classroom::get();
-
-        /*
-        $My_Classes = DB::table('Classrooms')
-            ->orderBy('Grade_id')
-            ->get();
-             */
-
-
-        return view('pages.My_Classes.My_Classes', compact('My_Classes', 'Grades'));
+        $data['grades'] = Grade::all();
+        return view('pages.My_Classes.My_Classes', $data);
     }
 
     /**

@@ -14,7 +14,7 @@
 
 @yield('css')
 <!--- Style css -->
-<link href="{{ URL::asset('assets/css/style.css') }}" rel="stylesheet">
+{{-- <link href="{{ URL::asset('assets/css/style.css') }}" rel="stylesheet"> --}}
 
 
     <link href="{{ URL::asset('assets/css/ltr.css') }}" rel="stylesheet">

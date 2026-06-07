@@ -120,7 +120,7 @@
                 <div class="clearfix"></div>
             </a>
             <ul id="Accounts-menu" class="collapse" data-parent="#sidebarnav">
-                <li> <a href="{{route('Fees.index')}}">School Fees</a> </li>
+                <li> <a href="{{route('fee-names.index')}}">School Fees</a> </li>
                 <li> <a href="{{route('Fees_Invoices.index')}}">Invoices</a> </li>
                 <li> <a href="{{route('receipt_students.index')}}">Receipts</a> </li>
                 <li> <a href="{{route('ProcessingFee.index')}}">Processing Fees</a> </li>

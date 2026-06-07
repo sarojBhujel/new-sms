@@ -18,10 +18,10 @@ class SpecializationTableSeeder extends Seeder
     {
         DB::table('specializations')->delete();
         $specializations = [
-            ['en' => 'Arabic', 'ar' => 'عربي'],
-            ['en' => 'Sciences', 'ar' => 'علوم'],
-            ['en' => 'Computer', 'ar' => 'حاسب الي'],
-            ['en' => 'English', 'ar' => 'انجليزي'],
+            ['Nepali'],
+            ['Sciences'],
+            ['Computer'],
+            ['English'],
         ];
         foreach ($specializations as $S) {
             Specialization::create(['Name' => $S]);

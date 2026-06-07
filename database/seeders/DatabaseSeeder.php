@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ReligionTableSeeder::class);
         $this->call(SpecializationTableSeeder::class);
         $this->call(GenderTableSeeder::class);
+        $this->call(MonthSeeder::class);
         $this->call(UserTableSeeder::class);
         $this->call(SettingsTableSeeder::class);
 
@@ -33,106 +34,106 @@ class DatabaseSeeder extends Seeder
 
         Grade::truncate(); 
         Grade::create([
-            'Name' => ['en' => "Primary Stage"],
+            'Name' =>  "Primary Stage",
             'Notes' => '',
         ]);
         Grade::create([
-            'Name' => ['en' => "Middle School"],
+            'Name' =>  "Middle School",
             'Notes' => '',
         ]);
         Grade::create([
-            'Name' => ['en' => "High School"],
+            'Name' =>  "High School",
             'Notes' => '',
         ]);
 
 
         Classroom::truncate(); 
         Classroom::create([
-            'Name_Class' => ['en' => "first level"],
+            'Name_Class' =>  "first level",
             'Grade_id' => '1',
         ]);
         Classroom::create([
-            'Name_Class' => ['en' => "second level"],
+            'Name_Class' =>  "second level",
             'Grade_id' => '1',
         ]);
         Classroom::create([
-            'Name_Class' => ['en' => "first level"],
+            'Name_Class' =>  "first level",
             'Grade_id' => '2',
         ]);
         Classroom::create([
-            'Name_Class' => ['en' => "second level"],
+            'Name_Class' =>  "second level",
             'Grade_id' => '2',
         ]);
         Classroom::create([
-            'Name_Class' => ['en' => "first level"],
+            'Name_Class' =>  "first level",
             'Grade_id' => '3',
         ]);
         Classroom::create([
-            'Name_Class' => ['en' => "second level"],
+            'Name_Class' =>  "second level",
             'Grade_id' => '3',
         ]);
 
 
         DB::table('sections')->delete();
         Section::create([
-            'Name_Section' => ['en' => "A"],
+            'Name_Section' =>  "A",
             'Status' => '1',
             'Grade_id' => '1', 'Class_id' => '1',
         ]);
         Section::create([
-            'Name_Section' => ['en' => "B"],
+            'Name_Section' =>  "B",
             'Status' => '1',
             'Grade_id' => '1', 'Class_id' => '1',
         ]);
         Section::create([
-            'Name_Section' => ['en' => "A"],
+            'Name_Section' =>  "A",
             'Status' => '1',
             'Grade_id' => '1', 'Class_id' => '2',
         ]);
         Section::create([
-            'Name_Section' => ['en' => "B"],
+            'Name_Section' =>  "B",
             'Status' => '1',
             'Grade_id' => '1', 'Class_id' => '2',
         ]);
 
         Section::create([
-            'Name_Section' => ['en' => "A"],
+            'Name_Section' =>  "A",
             'Status' => '1',
             'Grade_id' => '2', 'Class_id' => '3',
         ]);
         Section::create([
-            'Name_Section' => ['en' => "B"],
+            'Name_Section' =>  "B",
             'Status' => '1',
             'Grade_id' => '2', 'Class_id' => '3',
         ]);
         Section::create([
-            'Name_Section' => ['en' => "A"],
+            'Name_Section' =>  "A",
             'Status' => '1',
             'Grade_id' => '2', 'Class_id' => '4',
         ]);
         Section::create([
-            'Name_Section' => ['en' => "B"],
+            'Name_Section' =>  "B",
             'Status' => '1',
             'Grade_id' => '2', 'Class_id' => '4',
         ]);
 
         Section::create([
-            'Name_Section' => ['en' => "A"],
+            'Name_Section' =>  "A",
             'Status' => '1',
             'Grade_id' => '3', 'Class_id' => '5',
         ]);
         Section::create([
-            'Name_Section' => ['en' => "B"],
+            'Name_Section' =>  "B",
             'Status' => '1',
             'Grade_id' => '3', 'Class_id' => '5',
         ]);
         Section::create([
-            'Name_Section' => ['en' => "A"],
+            'Name_Section' =>  "A",
             'Status' => '1',
             'Grade_id' => '3', 'Class_id' => '6',
         ]);
         Section::create([
-            'Name_Section' => ['en' => "B"],
+            'Name_Section' =>  "B",
             'Status' => '1',
             'Grade_id' => '3', 'Class_id' => '6',
         ]);
@@ -142,20 +143,20 @@ class DatabaseSeeder extends Seeder
         My_Parent::create([
             'Email' => 'my@example.com',
             'Password' => Hash::make('12345678'),
-            'Name_Father' => ['en' => "Osama"],
+            'Name_Father' =>  "Osama",
             'National_ID_Father' => '1234567890',
             'Passport_ID_Father' => '1234567890',
             'Phone_Father' => '1234567890',
-            'Job_Father' => ['en' => "mozef"],
+            'Job_Father' =>  "mozef",
             'Nationality_Father_id' => '1',
             'Blood_Type_Father_id' => '1',
             'Religion_Father_id' => '1',
             'Address_Father' => '21 ithad street monib',
-            'Name_Mother' => ['en' => "Salwa"],
+            'Name_Mother' =>  "Salwa",
             'National_ID_Mother' => '1234567890',
             'Passport_ID_Mother' => '1234567890',
             'Phone_Mother' => '1234567890',
-            'Job_Mother' => ['en' => "mozef"],
+            'Job_Mother' =>  "mozef",
             'Nationality_Mother_id' => '1',
             'Blood_Type_Mother_id' => '1',
             'Religion_Mother_id' => '1',
@@ -167,7 +168,7 @@ class DatabaseSeeder extends Seeder
         Student::create([
             'email' => 'khaled@example.com',
             'password' => Hash::make('12345678'),
-            'name' => ['en' => "Khaled"],
+            'name' =>  "Khaled",
             'gender_id' => '1',
             'nationalitie_id' => '1',
             'blood_id' => '1',
@@ -181,7 +182,7 @@ class DatabaseSeeder extends Seeder
         Student::create([
             'email' => 'ahmed@example.com',
             'password' => Hash::make('12345678'),
-            'name' => ['en' => "ahmed"],
+            'name' =>  "ahmed",
             'gender_id' => '1',
             'nationalitie_id' => '2',
             'blood_id' => '3',
@@ -195,7 +196,7 @@ class DatabaseSeeder extends Seeder
         Student::create([
             'email' => 'sara@example.com',
             'password' => Hash::make('12345678'),
-            'name' => ['en' => "sara"],
+            'name' =>  "sara",
             'gender_id' => '2',
             'nationalitie_id' => '3',
             'blood_id' => '5',
@@ -211,7 +212,7 @@ class DatabaseSeeder extends Seeder
         Teacher::create([
             'Email' => 'khaled@example.com',
             'Password' => Hash::make('12345678'),
-            'name' => ['en' => "Khaled"],
+            'name' =>  "Khaled",
             'gender_id' => '1',
             'Specialization_id' => '1',
             'Joining_Date' => '2022-10-17',
@@ -220,13 +221,13 @@ class DatabaseSeeder extends Seeder
 
         DB::table('subjects')->delete();
         Subject::create([
-            'name' => ['en' => "science"],
+            'name' =>  "science",
             'grade_id' => '1',
             'classroom_id' => '1',
             'teacher_id' => '1',
         ]);
         Subject::create([
-            'name' => ['en' => "computer"],
+            'name' =>  "computer",
             'grade_id' => '1',
             'classroom_id' => '1',
             'teacher_id' => '1',

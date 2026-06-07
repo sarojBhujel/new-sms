@@ -1,0 +1,9 @@
+FeeNames DataTable and CRUD architecture
+
+- Align FeeNamesController with GradeController: server-side DataTable in index, AJAX create/edit/delete, show and edit JSON endpoints.
+- Use StoreFeeNames request for validation like StoreGrades.
+- Load classes via AJAX for add/edit modal and render class-specific amount/remarks rows.
+- Implement top-level type behavior: monthly / yearly / custom with month selectors.
+- Use FeeNames model hasMany Fees, Fee belongsTo FeeNames + Classroom + Grade.
+- Ensure data is saved in transactions and related Fee records are synced on update.
+- Keep UI DataTable structure same as Grades.blade.php.

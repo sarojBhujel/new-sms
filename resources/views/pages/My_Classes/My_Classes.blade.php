@@ -40,23 +40,21 @@
 
                 <br><br>
 
-                <form action="{{ route('Filter_Classes') }}" method="POST">
-                    {{ csrf_field() }}
+                <form id="classFilterForm" action="#" method="POST">
+                    @csrf
                     <select class="selectpicker" data-style="btn-info" name="Grade_id" required
-                        onchange="this.form.submit()">
+                        onchange="$('#classFilterForm').submit()">
                         <option value="" selected disabled>{{ trans('My_Classes_trans.Search_By_Grade') }}
                         </option>
-                        @foreach ($Grades as $Grade)
-                            <option value="{{ $Grade->id }}">{{ $Grade->Name }}</option>
+                        @foreach ($grades as $grade)
+                            <option value="{{ $grade->id }}">{{ $grade->Name }}</option>
                         @endforeach
                     </select>
                 </form>
 
-
-
                 <div class="table-responsive">
-                    <table id="datatable" class="table  table-hover table-sm table-bordered p-0" data-page-length="50"
-                        style="text-align: center">
+                    <table id="myClassesTable" class="table table-hover table-sm table-bordered p-0 no-datatable"
+                        data-page-length="50" style="text-align: center">
                         <thead>
                             <tr>
                                 <th><input name="select_all" id="example-select-all" type="checkbox"
@@ -67,135 +65,78 @@
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            @if (isset($details))
-                            <?php $List_Classes = $details; ?>
-                            @else
-                            <?php $List_Classes = $My_Classes; ?>
-                            @endif
-
-
-                            <?php $i = 0; ?>
-                            @foreach ($List_Classes as $My_Class)
-                                <tr>
-                                    <?php $i++; ?>
-                                    <td><input type="checkbox" value="{{ $My_Class->id }}" class="box1"></td>
-                                    <td>{{ $i }}</td>
-                                    <td>{{ $My_Class->Name_Class }}</td>
-                                    <td>{{ $My_Class->Grades->Name }}</td>
-                                    <td>
-                                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                            data-target="#edit{{ $My_Class->id }}"
-                                            title="{{ trans('Grades_trans.Edit') }}"><i
-                                                class="fa fa-edit"></i></button>
-                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                            data-target="#delete{{ $My_Class->id }}"
-                                            title="{{ trans('Grades_trans.Delete') }}"><i
-                                                class="fa fa-trash"></i></button>
-                                    </td>
-                                </tr>
-
-                                <!-- edit_modal_Grade -->
-                                <div class="modal fade" id="edit{{ $My_Class->id }}" tabindex="-1" role="dialog"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 style="font-family: 'Cairo', sans-serif;" class="modal-title"
-                                                    id="exampleModalLabel">
-                                                    {{ trans('My_Classes_trans.edit_class') }}
-                                                </h5>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                    aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <!-- edit_form -->
-                                                <form action="{{ route('Classrooms.update', 'test') }}" method="post">
-                                                    {{ method_field('patch') }}
-                                                    @csrf
-                                                    <div class="row">
-                                                        
-                                                        <div class="col">
-                                                            <label for="Name"
-                                                                class="mr-sm-2">Class Name
-                                                                :</label>
-                                                            <input type="text" class="form-control"
-                                                                value="{{ $My_Class->Name_Class }}"
-                                                                name="Name" required>
-                                                        </div>
-                                                    </div><br>
-                                                    <div class="form-group">
-                                                        <label
-                                                            for="exampleFormControlTextarea1">{{ trans('My_Classes_trans.Name_Grade') }}
-                                                            :</label>
-                                                        <select class="form-control form-control-lg"
-                                                            id="exampleFormControlSelect1" name="Grade_id">
-
-                                                            @foreach ($Grades as $Grade)
-                                                                <option value="{{ $Grade->id }}"
-                                                                    @if ($My_Class->Grades->id == $Grade->id) selected @endif
-                                                                    >
-
-                                                                    {{ $Grade->Name }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
-
-                                                    </div>
-                                                    <br><br>
-
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-dismiss="modal">{{ trans('Grades_trans.Close') }}</button>
-                                                        <button type="submit"
-                                                            class="btn btn-success">{{ trans('Grades_trans.submit') }}</button>
-                                                    </div>
-                                                </form>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <!-- delete_modal_Grade -->
-                                <div class="modal fade" id="delete{{ $My_Class->id }}" tabindex="-1" role="dialog"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 style="font-family: 'Cairo', sans-serif;" class="modal-title"
-                                                    id="exampleModalLabel">
-                                                    {{ trans('My_Classes_trans.delete_class') }}
-                                                </h5>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                    aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form action="{{ route('Classrooms.destroy', 'test') }}"
-                                                    method="post">
-                                                    {{ method_field('Delete') }}
-                                                    @csrf
-                                                    {{ trans('My_Classes_trans.Warning_Grade') }}
-                                                    <input id="id" type="hidden" name="id"
-                                                        class="form-control" value="{{ $My_Class->id }}">
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-dismiss="modal">{{ trans('My_Classes_trans.Close') }}</button>
-                                                        <button type="submit"
-                                                            class="btn btn-danger">{{ trans('My_Classes_trans.Delete') }}</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
+                        <tbody></tbody>
                     </table>
+                </div>
+
+                <div class="modal fade" id="editClassModal" tabindex="-1" role="dialog"
+                    aria-labelledby="editClassLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 style="font-family: 'Cairo', sans-serif;" class="modal-title" id="editClassLabel">
+                                    {{ trans('My_Classes_trans.edit_class') }}
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="classEditForm">
+                                    @csrf
+                                    @method('PATCH')
+                                    <input type="hidden" id="edit_class_id" name="id">
+                                    <div class="row">
+                                        <div class="col">
+                                            <label for="edit_Name_Class" class="mr-sm-2">Class Name :</label>
+                                            <input id="edit_Name_Class" type="text" class="form-control" name="Name"
+                                                required>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="form-group">
+                                        <label for="edit_Grade_id">{{ trans('My_Classes_trans.Name_Grade') }} :</label>
+                                        <select class="form-control form-control-lg" id="edit_Grade_id" name="Grade_id">
+                                            @foreach ($grades as $grade)
+                                                <option value="{{ $grade->id }}">{{ $grade->Name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <br><br>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">{{ trans('Grades_trans.Close') }}</button>
+                                        <button type="submit" class="btn btn-success">{{ trans('Grades_trans.submit') }}</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="deleteClassModal" tabindex="-1" role="dialog"
+                    aria-labelledby="deleteClassLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 style="font-family: 'Cairo', sans-serif;" class="modal-title" id="deleteClassLabel">
+                                    {{ trans('My_Classes_trans.delete_class') }}
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>{{ trans('My_Classes_trans.Warning_Grade') }}</p>
+                                <p><strong id="delete_class_name"></strong></p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                    data-dismiss="modal">{{ trans('My_Classes_trans.Close') }}</button>
+                                <button type="button" class="btn btn-danger" id="confirmDeleteClass">{{ trans('My_Classes_trans.Delete') }}</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -240,8 +181,8 @@
 
                                                 <div class="box">
                                                     <select class="fancyselect" name="Grade_id">
-                                                        @foreach ($Grades as $Grade)
-                                                            <option value="{{ $Grade->id }}">{{ $Grade->Name }}
+                                                        @foreach ($grades as $grade)
+                                                            <option value="{{ $grade->id }}">{{ $grade->Name }}
                                                             </option>
                                                         @endforeach
                                                     </select>
@@ -289,7 +230,7 @@
     </div>
 </div>
 
-<!-- حذف مجموعة صفوف -->
+<!-- delete all  modal-->
 <div class="modal fade" id="delete_all" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -331,20 +272,154 @@
 @toastr_js
 @toastr_render
 
-<script type="text/javascript">
-    $(function() {
-        $("#btn_delete_all").click(function() {
-            var selected = new Array();
-            $("#datatable input[type=checkbox]:checked").each(function() {
-                selected.push(this.value);
-            });
-            if (selected.length > 0) {
-                $('#delete_all').modal('show')
-                $('input[id="delete_all_id"]').val(selected);
-            }
-        });
-    });
-</script>
+@push('js')
+    <script>
+        $(function () {
+            ajaxSetupCsrf();
 
+            var editModal = $('#editClassModal');
+            var deleteModal = $('#deleteClassModal');
+            var currentDeleteId = null;
+
+            var myClassesTable = $('#myClassesTable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: '/Classrooms',
+                    type: 'GET',
+                    data: function (d) {
+                        d.grade_id = $('select[name="Grade_id"]').val();
+                    }
+                },
+                columns: [
+                    {
+                        data: 'id',
+                        render: function (data) {
+                            return '<input type="checkbox" value="' + data + '" class="box1">';
+                        },
+                        orderable: false,
+                        searchable: false,
+                    },
+                    {
+                        data: 'id',
+                        render: function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        },
+                        orderable: false,
+                        searchable: false,
+                    },
+                    { data: 'Name_Class' },
+                    {
+                        data: 'grade.Name',
+                        defaultContent: ''
+                    },
+                    {
+                        data: 'id',
+                        render: function (data, type, row) {
+                            return '<button type="button" class="btn btn-info btn-sm btn-class-edit" data-id="' + row.id + '" title="Edit"><i class="fa fa-edit"></i></button>' +
+                                ' <button type="button" class="btn btn-danger btn-sm btn-class-delete" data-id="' + row.id + '" data-name="' + row.Name_Class + '" title="Delete"><i class="fa fa-trash"></i></button>';
+                        },
+                        orderable: false,
+                        searchable: false,
+                    }
+                ],
+                pageLength: 10,
+                lengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]],
+                order: [[2, 'asc']],
+                language: {
+                    processing: 'Processing...',
+                    lengthMenu: 'Show _MENU_ entries',
+                    zeroRecords: 'No matching records found',
+                    info: 'Showing _START_ to _END_ of _TOTAL_ entries',
+                    infoEmpty: 'Showing 0 to 0 of 0 entries',
+                    infoFiltered: '(filtered from _MAX_ total entries)',
+                    paginate: {
+                        first: 'First',
+                        last: 'Last',
+                        next: 'Next',
+                        previous: 'Previous'
+                    }
+                }
+            });
+
+            $('#classFilterForm').on('submit', function (e) {
+                e.preventDefault();
+                myClassesTable.ajax.reload();
+            });
+
+            $(document).on('click', '.btn-class-edit', function () {
+                var id = $(this).data('id');
+                $.getJSON('/Classrooms/' + id + '/edit', function (classroom) {
+                    $('#edit_class_id').val(classroom.id);
+                    $('#edit_Name_Class').val(classroom.Name_Class);
+                    $('#edit_Grade_id').val(classroom.Grade_id);
+                    editModal.modal('show');
+                }).fail(function (xhr) {
+                    showAjaxError(xhr, 'Unable to load class data.');
+                });
+            });
+
+            $('#classEditForm').on('submit', function (e) {
+                e.preventDefault();
+                var id = $('#edit_class_id').val();
+                var payload = {
+                    Name: $('#edit_Name_Class').val(),
+                    Grade_id: $('#edit_Grade_id').val()
+                };
+
+                $.ajax({
+                    url: '/Classrooms/' + id,
+                    method: 'PATCH',
+                    data: payload,
+                    success: function (response) {
+                        editModal.modal('hide');
+                        toastr.success(response.message || 'Class updated successfully.');
+                        myClassesTable.ajax.reload();
+                    },
+                    error: function (xhr) {
+                        showAjaxError(xhr, 'Update failed.');
+                    }
+                });
+            });
+
+            $(document).on('click', '.btn-class-delete', function () {
+                currentDeleteId = $(this).data('id');
+                $('#delete_class_name').text($(this).data('name'));
+                deleteModal.modal('show');
+            });
+
+            $('#confirmDeleteClass').on('click', function () {
+                if (!currentDeleteId) {
+                    return;
+                }
+
+                $.ajax({
+                    url: '/Classrooms/' + currentDeleteId,
+                    method: 'DELETE',
+                    success: function (response) {
+                        deleteModal.modal('hide');
+                        currentDeleteId = null;
+                        toastr.success(response.message || 'Class deleted successfully.');
+                        myClassesTable.ajax.reload();
+                    },
+                    error: function (xhr) {
+                        showAjaxError(xhr, 'Delete failed.');
+                    }
+                });
+            });
+
+            $('#btn_delete_all').click(function () {
+                var selected = [];
+                $('#myClassesTable tbody input[type=checkbox]:checked').each(function () {
+                    selected.push(this.value);
+                });
+                if (selected.length > 0) {
+                    $('#delete_all').modal('show');
+                    $('input[id="delete_all_id"]').val(selected);
+                }
+            });
+        });
+    </script>
+@endpush
 
 @endsection
