@@ -148,11 +148,15 @@
                                 <input id="Name" type="text" name="Name" class="form-control">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="exampleFormControlTextarea1">{{ trans('Grades_trans.Notes') }}
-                                :</label>
-                            <textarea class="form-control" name="Notes" id="exampleFormControlTextarea1" rows="3"></textarea>
-                        </div>
+                            <div class="form-group">
+                                <label for="exampleFormControlTextarea1">{{ trans('Grades_trans.Notes') }}
+                                    :</label>
+                                <textarea class="form-control" name="Notes" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="has_faculty">Has Faculty:</label>
+                                <input type="checkbox" name="has_faculty" value="1">
+                            </div>
                         <br><br>
                 </div>
                 <div class="modal-footer">
@@ -166,10 +170,14 @@
         </div>
     </div>
 
-</div>
-
-<!-- row closed -->
-@endsection
+                                <div class="form-group mt-3">
+                                    <label for="edit_Notes">{{ trans('Grades_trans.Notes') }} :</label>
+                                    <textarea class="form-control" id="edit_Notes" name="Notes" rows="3"></textarea>
+                                </div>
+                                <div class="form-group mt-3">
+                                    <label for="edit_has_faculty">Has Faculty:</label>
+                                    <input type="checkbox" id="edit_has_faculty" name="has_faculty" value="1">
+                                </div>
 @section('js')
 @toastr_js
 @toastr_render
@@ -246,6 +254,7 @@
                     $('#edit_grade_id').val(grade.id);
                     $('#edit_Name').val(grade.Name);
                     $('#edit_Notes').val(grade.Notes);
+                        $('#edit_has_faculty').prop('checked', grade.has_faculty ? true : false);
                     editModal.modal('show');
                 }).fail(function () {
                     toastr.error('Unable to load grade data.');
@@ -260,6 +269,8 @@
                     Name: $('#edit_Name').val(),
                     Notes: $('#edit_Notes').val()
                 };
+
+                payload.has_faculty = $('#edit_has_faculty').is(':checked') ? 1 : 0;
 
                 $.ajax({
                     url: '/grades/' + id,

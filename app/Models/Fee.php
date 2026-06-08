@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Classroom;
 use App\Models\Grade;
 use App\Models\FeeNames;
+use App\Models\FiscalYear;
 
 class Fee extends Model
 {
@@ -20,6 +21,7 @@ class Fee extends Model
         'Classroom_id',
         'description',
         'Fee_type',
+        'active_fiscal_year_id',
     ];
 
     public function grade()
@@ -35,5 +37,10 @@ class Fee extends Model
     public function feeName()
     {
         return $this->belongsTo(FeeNames::class, 'fee_name_id');
+    }
+
+    public function fiscalYear()
+    {
+        return $this->belongsTo(FiscalYear::class, 'active_fiscal_year_id');
     }
 }

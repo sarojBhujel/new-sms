@@ -21,8 +21,39 @@
                     <div class="col-xl-12 mb-30">
                         <div class="card card-statistics h-100">
                             <div class="card-body">
-                                <a href="{{route('Students.create')}}" class="btn btn-success btn-sm" role="button"
-                                   aria-pressed="true">{{trans('main_trans.add_student')}}</a><br><br>
+                                <div class="d-flex flex-wrap align-items-center mb-3">
+                                    <a href="{{ route('Students.create') }}" class="btn btn-success btn-sm mr-2" role="button"
+                                       aria-pressed="true">{{ trans('main_trans.add_student') }}</a>
+                                    <a href="{{ route('Students.import.template') }}" class="btn btn-info btn-sm mr-2">Download Student Import Template</a>
+                                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#studentImportModal">Import Students</button>
+                                </div>
+
+                                @if($errors->any())
+                                    <div class="alert alert-danger">
+                                        <ul class="mb-0">
+                                            @foreach($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+
+                                @if(session('import_failures'))
+                                    <div class="alert alert-warning">
+                                        <ul class="mb-0">
+                                            @foreach(session('import_failures') as $failure)
+                                                <li>{{ $failure }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+
+                                @if(session('success'))
+                                    <div class="alert alert-success">
+                                        {{ session('success') }}
+                                    </div>
+                                @endif
+
                                 <div class="table-responsive">
                                     <table id="studentsTable" class="table table-hover table-sm table-bordered p-0"
                                            data-page-length="50"
@@ -36,6 +67,9 @@
                                             <th>{{trans('Students_trans.Grade')}}</th>
                                             <th>{{trans('Students_trans.classrooms')}}</th>
                                             <th>{{trans('Students_trans.section')}}</th>
+                                            <th>{{trans('Students_trans.admission_no')}}</th>
+                                            <th>{{trans('Students_trans.roll_no')}}</th>
+                                            {{-- <th>{{trans('Students_trans.academic_year')}}</th> --}}
                                             <th>{{trans('Students_trans.Processes')}}</th>
                                         </tr>
                                         </thead>
@@ -62,6 +96,33 @@
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('Students_trans.Close') }}</button>
                                                 <button type="button" class="btn btn-danger" id="confirmDeleteStudent">{{ trans('Students_trans.submit') }}</button>
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal fade" id="studentImportModal" tabindex="-1" aria-labelledby="studentImportLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="studentImportLabel">Import Students from Excel</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <form action="{{ route('Students.import') }}" method="post" enctype="multipart/form-data">
+                                                @csrf
+                                                <div class="modal-body">
+                                                    <div class="form-group">
+                                                        <label for="student_import_file">Excel File</label>
+                                                        <input type="file" name="file" id="student_import_file" class="form-control-file" required>
+                                                    </div>
+                                                    <p class="text-muted">Download the template first and fill columns exactly as shown.</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary">Import Students</button>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -117,6 +178,8 @@
                     { data: 'grade' },
                     { data: 'classroom' },
                     { data: 'section' },
+                    { data: 'admission_no' },
+                    { data: 'roll_no' },
                     {
                         data: 'id',
                         render: function (data, type, row) {
@@ -127,6 +190,7 @@
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink${row.id}" style="min-width: 220px;">
                                     <a class="dropdown-item" href="${studentsUrl}/${row.id}"><i style="color: #ffc107" class="far fa-eye"></i>&nbsp; View Student</a>
                                     <a class="dropdown-item" href="${studentsUrl}/${row.id}/edit"><i style="color:green" class="fa fa-edit"></i>&nbsp; Edit Student</a>
+                                    <a class="dropdown-item" href="${studentsUrl}/${row.id}/id-card" target="_blank"><i style="color:#17a2b8" class="fas fa-print"></i>&nbsp; ID Card</a>
                                     <a class="dropdown-item" href="${feesInvoiceUrl}/${row.id}"><i style="color: #0000cc" class="fa fa-edit"></i>&nbsp; Add Fee Invoice</a>
                                     <a class="dropdown-item" href="${receiptUrl}/${row.id}"><i style="color: #9dc8e2" class="fas fa-money-bill-alt"></i>&nbsp; Receipt</a>
                                     <a class="dropdown-item" href="${processingFeeUrl}/${row.id}"><i style="color: #9dc8e2" class="fas fa-money-bill-alt"></i>&nbsp; Processing Fee</a>

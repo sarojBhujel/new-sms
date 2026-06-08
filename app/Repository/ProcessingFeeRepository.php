@@ -4,6 +4,7 @@
 namespace App\Repository;
 
 
+use App\Models\FiscalYear;
 use App\Models\ProcessingFee;
 use App\Models\Student;
 use App\Models\StudentAccount;
@@ -37,11 +38,14 @@ class ProcessingFeeRepository implements ProcessingFeeRepositoryInterface
 
         try {
             // حفظ البيانات في جدول معالجة الرسوم
+            $activeFiscalYear = FiscalYear::requireActive();
+
             $ProcessingFee = new ProcessingFee();
             $ProcessingFee->date = date('Y-m-d');
             $ProcessingFee->student_id = $request->student_id;
             $ProcessingFee->amount = $request->Debit;
             $ProcessingFee->description = $request->description;
+            $ProcessingFee->active_fiscal_year_id = $activeFiscalYear->id;
             $ProcessingFee->save();
 
 
@@ -77,6 +81,9 @@ class ProcessingFeeRepository implements ProcessingFeeRepositoryInterface
             $ProcessingFee->student_id = $request->student_id;
             $ProcessingFee->amount = $request->Debit;
             $ProcessingFee->description = $request->description;
+            if (!$ProcessingFee->active_fiscal_year_id) {
+                $ProcessingFee->active_fiscal_year_id = FiscalYear::requireActive()->id;
+            }
             $ProcessingFee->save();
 
             // تعديل البيانات في جدول حساب الطلاب

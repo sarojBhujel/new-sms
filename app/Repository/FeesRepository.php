@@ -5,6 +5,7 @@ namespace App\Repository;
 
 
 use App\Models\Fee;
+use App\Models\FiscalYear;
 use App\Models\Grade;
 
 class FeesRepository implements FeesRepositoryInterface
@@ -37,6 +38,7 @@ class FeesRepository implements FeesRepositoryInterface
     public function store($request)
     {
         try {
+            $activeFiscalYear = FiscalYear::requireActive();
 
             $fees = new Fee();
             $fees->title = $request->title;
@@ -46,6 +48,7 @@ class FeesRepository implements FeesRepositoryInterface
             $fees->description  = $request->description;
             $fees->year  = $request->year;
             $fees->Fee_type  = $request->Fee_type;
+            $fees->active_fiscal_year_id = $activeFiscalYear->id;
             $fees->save();
             
             toastr()->success('Data has been saved successfully');

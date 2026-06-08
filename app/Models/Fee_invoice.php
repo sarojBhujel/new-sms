@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\FiscalYear;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -35,5 +36,10 @@ class Fee_invoice extends Model
     public function fees()
     {
         return $this->belongsTo('App\Models\Fee', 'fee_id');
+    }
+
+    public function fiscalYear()
+    {
+        return $this->belongsTo(FiscalYear::class, 'active_fiscal_year_id');
     }
 }

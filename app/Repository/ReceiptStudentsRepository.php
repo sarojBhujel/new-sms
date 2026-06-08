@@ -3,6 +3,7 @@
 
 namespace App\Repository;
 
+use App\Models\FiscalYear;
 use App\Models\FundAccount;
 use App\Models\ReceiptStudent;
 use App\Models\Student;
@@ -38,11 +39,14 @@ class ReceiptStudentsRepository implements ReceiptStudentsRepositoryInterface
         try {
 
             // حفظ البيانات في جدول سندات القبض
+            $activeFiscalYear = FiscalYear::requireActive();
+
             $receipt_students = new ReceiptStudent();
             $receipt_students->date = date('Y-m-d');
             $receipt_students->student_id = $request->student_id;
             $receipt_students->Debit = $request->Debit;
             $receipt_students->description = $request->description;
+            $receipt_students->active_fiscal_year_id = $activeFiscalYear->id;
             $receipt_students->save();
 
             // حفظ البيانات في جدول الصندوق
@@ -52,6 +56,7 @@ class ReceiptStudentsRepository implements ReceiptStudentsRepositoryInterface
             $fund_accounts->Debit = $request->Debit;
             $fund_accounts->credit = 0.00;
             $fund_accounts->description = $request->description;
+            $fund_accounts->active_fiscal_year_id = $activeFiscalYear->id;
             $fund_accounts->save();
 
             // حفظ البيانات في جدول حساب الطالب
@@ -85,7 +90,12 @@ class ReceiptStudentsRepository implements ReceiptStudentsRepositoryInterface
             $receipt_students->student_id = $request->student_id;
             $receipt_students->Debit = $request->Debit;
             $receipt_students->description = $request->description;
+            if (!$receipt_students->active_fiscal_year_id) {
+                $receipt_students->active_fiscal_year_id = FiscalYear::requireActive()->id;
+            }
             $receipt_students->save();
+
+            $activeFiscalYear = FiscalYear::requireActive();
 
             // تعديل البيانات في جدول الصندوق
             $fund_accounts = FundAccount::where('receipt_id', $request->id)->first();
@@ -94,6 +104,9 @@ class ReceiptStudentsRepository implements ReceiptStudentsRepositoryInterface
             $fund_accounts->Debit = $request->Debit;
             $fund_accounts->credit = 0.00;
             $fund_accounts->description = $request->description;
+            if (!$fund_accounts->active_fiscal_year_id) {
+                $fund_accounts->active_fiscal_year_id = $activeFiscalYear->id;
+            }
             $fund_accounts->save();
 
             // تعديل البيانات في جدول الصندوق

@@ -1,6 +1,7 @@
 @extends('layouts.master')
 @section('css')
     @toastr_css
+    <link href="https://nepalidatepicker.sajanmaharjan.com.np/v5/nepali.datepicker/css/nepali.datepicker.v5.0.6.min.css" rel="stylesheet" type="text/css"/>
 @section('title')
     {{ trans('main_trans.add_student') }}
 @stop
@@ -32,12 +33,12 @@
                 <form method="post" action="{{ route('Students.store') }}" autocomplete="off" enctype="multipart/form-data">
                     @csrf
                     <h6 style="font-family: 'Cairo', sans-serif;color: blue">
-                        {{ trans('Students_trans.personal_information') }}</h6><br>
+                        Personal <Iframe></Iframe>nformation</h6><br>
                     <div class="row">
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>{{ trans('Students_trans.name') }} : <span
+                                <label>Name : <span
                                         class="text-danger">*</span></label>
                                 <input class="form-control" name="name" type="text">
                             </div>
@@ -47,7 +48,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>{{ trans('Students_trans.email') }} : </label>
+                                <label>Email : </label>
                                 <input type="email" name="email" class="form-control">
                             </div>
                         </div>
@@ -55,14 +56,14 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>{{ trans('Students_trans.password') }} :</label>
+                                <label>Password :</label>
                                 <input type="password" name="password" class="form-control">
                             </div>
                         </div>
 
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="gender">{{ trans('Students_trans.gender') }} : <span
+                                <label for="gender">Gender : <span
                                         class="text-danger">*</span></label>
                                 <select class="custom-select mr-sm-2" name="gender_id">
                                     <option selected disabled>{{ trans('Parent_trans.Choose') }}...</option>
@@ -75,7 +76,7 @@
 
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="nal_id">{{ trans('Students_trans.Nationality') }} : <span
+                                <label for="nal_id">Nationality: <span
                                         class="text-danger">*</span></label>
                                 <select class="custom-select mr-sm-2" name="nationalitie_id">
                                     <option selected disabled>{{ trans('Parent_trans.Choose') }}...</option>
@@ -88,7 +89,7 @@
 
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="bg_id">{{ trans('Students_trans.blood_type') }} : </label>
+                                <label for="bg_id">Blood Type : </label>
                                 <select class="custom-select mr-sm-2" name="blood_id">
                                     <option selected disabled>{{ trans('Parent_trans.Choose') }}...</option>
                                     @foreach ($bloods as $bg)
@@ -113,7 +114,7 @@
                     <div class="row">
                         <div class="col-md-2">
                             <div class="form-group">
-                                <label for="Grade_id">{{ trans('Students_trans.Grade') }} : <span
+                                <label for="Grade_id">Grade : <span
                                         class="text-danger">*</span></label>
                                 <select class="custom-select mr-sm-2" name="Grade_id">
                                     <option selected disabled>{{ trans('Parent_trans.Choose') }}...</option>
@@ -126,7 +127,16 @@
 
                         <div class="col-md-2">
                             <div class="form-group">
-                                <label for="Classroom_id">{{ trans('Students_trans.classrooms') }} : <span
+                                <label for="faculty_id">Faculty :</label>
+                                <select class="custom-select mr-sm-2" name="faculty_id" id="faculty_id">
+                                    <option selected disabled>{{ trans('Parent_trans.Choose') }}...</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="Classroom_id">Class : <span
                                         class="text-danger">*</span></label>
                                 <select class="custom-select mr-sm-2" name="Classroom_id">
 
@@ -136,7 +146,7 @@
 
                         <div class="col-md-2">
                             <div class="form-group">
-                                <label for="section_id">{{ trans('Students_trans.section') }} : </label>
+                                <label for="section_id">Section : </label>
                                 <select class="custom-select mr-sm-2" name="section_id">
 
                                 </select>
@@ -145,7 +155,7 @@
 
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="parent_id">{{ trans('Students_trans.parent') }} : <span
+                                <label for="parent_id">Parent : <span
                                         class="text-danger">*</span></label>
                                 <select class="custom-select mr-sm-2" name="parent_id">
                                     <option selected disabled>{{ trans('Parent_trans.Choose') }}...</option>
@@ -158,23 +168,29 @@
 
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="academic_year">{{ trans('Students_trans.academic_year') }} : <span
-                                        class="text-danger">*</span></label>
-                                <select class="custom-select mr-sm-2" name="academic_year">
-                                    <option selected disabled>{{ trans('Parent_trans.Choose') }}...</option>
-                                    @php
-                                        $current_year = date('Y');
-                                    @endphp
-                                    @for ($year = $current_year; $year <= $current_year + 1; $year++)
-                                        <option value="{{ $year }}">{{ $year }}</option>
-                                    @endfor
-                                </select>
+                                <label for="admission_no">Admission No :</label>
+                                <input class="form-control" name="admission_no" type="text" value="{{ old('admission_no') }}">
                             </div>
                         </div>
 
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label>{{ trans('Students_trans.Attachments') }} : <span
+                                <label for="admission_date">Admission Date:</label>
+                                <input class="form-control" name="admission_date" type="text" id="datepicker-admission-date" value="{{ old('admission_date') }}" data-date-format="yyyy-mm-dd">
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="roll_no">Roll No :</label>
+                                <input class="form-control" name="roll_no" type="text" value="{{ old('roll_no') }}">
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Attachments : <span
                                         class="text-danger">*</span></label>
                                 <input type="file" accept="image/*" name="photos[]" multiple>
                             </div>
@@ -182,7 +198,7 @@
 
                     </div><br>
                     <button class="btn btn-success btn-sm nextBtn btn-lg pull-right"
-                        type="submit">{{ trans('Students_trans.submit') }}</button>
+                        type="submit">Submit</button>
                 </form>
 
             </div>
@@ -194,5 +210,40 @@
 @section('js')
 @toastr_js
 @toastr_render
-
+<script src="https://nepalidatepicker.sajanmaharjan.com.np/v5/nepali.datepicker/js/nepali.datepicker.v5.0.6.min.js" type="text/javascript"></script>
+<script>
+    $(document).ready(function () {
+        $('#datepicker-action').NepaliDatePicker();
+        $('#datepicker-admission-date').NepaliDatePicker();
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('select[name="Grade_id"]').on('change', function () {
+            var Grade_id = $(this).val();
+            if (Grade_id) {
+                $.ajax({
+                    url: '/grades/' + Grade_id + '/faculties',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+                        var $faculty = $('#faculty_id');
+                        $faculty.empty();
+                        $faculty.append('<option selected disabled>{{ trans('Parent_trans.Choose') }}...</option>');
+                        if (data.has_faculty) {
+                            $.each(data.faculties, function (key, value) {
+                                $faculty.append('<option value="' + value.id + '">' + value.faculty_name + '</option>');
+                            });
+                            $faculty.prop('disabled', false);
+                        } else {
+                            $faculty.prop('disabled', true);
+                        }
+                    },
+                });
+            } else {
+                console.log('AJAX load did not work');
+            }
+        });
+    });
+</script>
 @endsection

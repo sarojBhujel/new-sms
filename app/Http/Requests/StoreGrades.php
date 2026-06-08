@@ -25,6 +25,7 @@ class StoreGrades extends FormRequest
     {
         return [
             'Name' => 'required|unique:grades,Name,' . $this->id,
+            'has_faculty' => 'sometimes|boolean',
         ];
     }
 

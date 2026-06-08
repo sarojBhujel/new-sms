@@ -6,6 +6,7 @@ namespace App\Repository;
 
 use App\Models\Fee;
 use App\Models\Fee_invoice;
+use App\Models\FiscalYear;
 use App\Models\Grade;
 use App\Models\Student;
 use App\Models\StudentAccount;
@@ -42,9 +43,11 @@ class FeeInvoicesRepository implements FeeInvoicesRepositoryInterface
         DB::beginTransaction();
 
         try {
+            $activeFiscalYear = FiscalYear::requireActive();
 
             foreach ($List_Fees as $List_Fee) {
                 // حفظ البيانات في جدول فواتير الرسوم الدراسية
+
                 $Fees = new Fee_invoice();
                 $Fees->invoice_date = date('Y-m-d');
                 $Fees->student_id = $List_Fee['student_id'];
@@ -53,6 +56,7 @@ class FeeInvoicesRepository implements FeeInvoicesRepositoryInterface
                 $Fees->fee_id = $List_Fee['fee_id'];
                 $Fees->amount = $List_Fee['amount'];
                 $Fees->description = $List_Fee['description'];
+                $Fees->active_fiscal_year_id = $activeFiscalYear->id;
                 $Fees->save();
 
                 // حفظ البيانات في جدول حسابات الطلاب

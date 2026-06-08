@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Models\Classroom;
+use App\Models\FiscalYear;
 use App\Models\Gender;
 use App\Models\Grade;
 use App\Models\Image;
@@ -10,6 +11,7 @@ use App\Models\My_Parent;
 use App\Models\Nationalitie;
 use App\Models\Section;
 use App\Models\Student;
+use App\Models\StudentFiscalDetail;
 use App\Models\Type_Blood;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -21,7 +23,14 @@ class StudentRepository implements StudentRepositoryInterface
 
     public function Get_Student()
     {
-        $students = Student::all();
+        $students = Student::with([
+            'gender',
+            'grade',
+            'currentFiscalDetail.fiscalYear',
+            'currentFiscalDetail.classroom',
+            'currentFiscalDetail.section',
+        ])->get();
+
         return view('pages.Students.index', compact('students'));
     }
 
@@ -32,19 +41,40 @@ class StudentRepository implements StudentRepositoryInterface
         $data['Genders'] = Gender::all();
         $data['nationals'] = Nationalitie::all();
         $data['bloods'] = Type_Blood::all();
-        $Students =  Student::findOrFail($id);
-        return view('pages.Students.edit', $data, compact('Students'));
+        $data['activeFiscalYear'] = FiscalYear::active();
+
+        $Students = Student::with([
+            'currentFiscalDetail.fiscalYear',
+            'currentFiscalDetail.classroom',
+            'currentFiscalDetail.section',
+        ])->findOrFail($id);
+
+        $studentFiscalDetail = $Students->currentFiscalDetail;
+
+        return view('pages.Students.edit', $data, compact('Students', 'studentFiscalDetail'));
     }
 
-    public function Show_Student($id) {
-        $Student = Student::findorfail($id);
-        return view('pages.Students.show',compact('Student'));
+    public function Show_Student($id)
+    {
+        $Student = Student::with([
+            'gender',
+            'Nationality',
+            'grade',
+            'myparent',
+            'currentFiscalDetail.fiscalYear',
+            'currentFiscalDetail.classroom',
+            'currentFiscalDetail.section',
+        ])->findOrFail($id);
+
+        return view('pages.Students.show', compact('Student'));
     }
 
     public function Update_Student($request)
     {
+        DB::beginTransaction();
+
         try {
-            $Edit_Students = Student::findorfail($request->id);
+            $Edit_Students = Student::findOrFail($request->id);
             $Edit_Students->name = $request->name;
             $Edit_Students->email = $request->email;
             $Edit_Students->password = Hash::make($request->password);
@@ -56,11 +86,44 @@ class StudentRepository implements StudentRepositoryInterface
             $Edit_Students->Classroom_id = $request->Classroom_id;
             $Edit_Students->section_id = $request->section_id;
             $Edit_Students->parent_id = $request->parent_id;
-            $Edit_Students->academic_year = $request->academic_year;
+
+            $fiscalYear = null;
+            if ($request->filled('fiscal_year_id')) {
+                $fiscalYear = FiscalYear::find($request->fiscal_year_id);
+            }
+
+            if (!$fiscalYear) {
+                $fiscalYear = FiscalYear::active();
+            }
+
+            if (!$fiscalYear) {
+                throw new \Exception('Please create and activate a fiscal year before performing this operation.');
+            }
+
+            $Edit_Students->academic_year = $fiscalYear->name;
             $Edit_Students->save();
+
+            StudentFiscalDetail::updateOrCreate(
+                [
+                    'student_id' => $Edit_Students->id,
+                    'academic_year_id' => $fiscalYear->id,
+                ],
+                [
+                    'active_fiscal_year_id' => $fiscalYear->id,
+                    'faculty_id' => $request->faculty_id,
+                    'admission_no' => $request->admission_no,
+                    'admission_date' => $request->admission_date,
+                    'class_id' => $request->Classroom_id,
+                    'section_id' => $request->section_id,
+                    'roll_no' => $request->roll_no,
+                ]
+            );
+
+            DB::commit();
             toastr()->success('Data has been Update successfully');
             return redirect()->route('Students.index');
         } catch (\Exception $e) {
+            DB::rollback();
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
     }
@@ -92,10 +155,22 @@ class StudentRepository implements StudentRepositoryInterface
 
     public function Store_Student($request)
     {
-
         DB::beginTransaction();
 
         try {
+            $fiscalYear = null;
+            if ($request->filled('fiscal_year_id')) {
+                $fiscalYear = FiscalYear::find($request->fiscal_year_id);
+            }
+
+            if (!$fiscalYear) {
+                $fiscalYear = FiscalYear::active();
+            }
+
+            if (!$fiscalYear) {
+                throw new \Exception('Please create and activate a fiscal year before performing this operation.');
+            }
+
             $students = new Student();
             $students->name = $request->name;
             $students->email = $request->email;
@@ -108,16 +183,26 @@ class StudentRepository implements StudentRepositoryInterface
             $students->Classroom_id = $request->Classroom_id;
             $students->section_id = $request->section_id;
             $students->parent_id = $request->parent_id;
-            $students->academic_year = $request->academic_year;
+            $students->academic_year = $fiscalYear->name;
             $students->save();
 
-            // insert img
+            StudentFiscalDetail::create([
+                'student_id' => $students->id,
+                'academic_year_id' => $fiscalYear->id,
+                'active_fiscal_year_id' => $fiscalYear->id,
+                'faculty_id' => $request->faculty_id,
+                'admission_no' => $request->admission_no,
+                'admission_date' => $request->admission_date,
+                'class_id' => $request->Classroom_id,
+                'section_id' => $request->section_id,
+                'roll_no' => $request->roll_no,
+            ]);
+
             if ($request->hasfile('photos')) {
                 foreach ($request->file('photos') as $file) {
                     $name = $file->getClientOriginalName();
                     $file->storeAs('attachments/students/' . $students->name, $file->getClientOriginalName(), 'upload_attachments');
 
-                    // insert in image_table
                     $images = new Image();
                     $images->filename = $name;
                     $images->imageable_id = $students->id;
@@ -125,7 +210,8 @@ class StudentRepository implements StudentRepositoryInterface
                     $images->save();
                 }
             }
-            DB::commit(); // insert data
+
+            DB::commit();
             toastr()->success('Data has been saved successfully');
             return redirect()->route('Students.create');
         } catch (\Exception $e) {

@@ -14,10 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::table('fees', function (Blueprint $table) {
-             $table->dropForeign(['Grade_id']);
-              $table->dropColumn('Grade_id');
-            $table->boolean('is_paid')->default(false);
-            $table->foreignId('fee_name_id')->references('id')->on('fee_names');
+            //  $table->dropForeign(['Grade_id']);
+            //   $table->dropColumn('Grade_id');
+            // $table->foreignId('fee_name_id')->references('id')->on('fee_names');
         });
     }
 

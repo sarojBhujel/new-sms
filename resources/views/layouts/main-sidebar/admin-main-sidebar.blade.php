@@ -108,6 +108,7 @@
             </a>
             <ul id="Parents-menu" class="collapse" data-parent="#sidebarnav">
                 <li> <a href="{{url('add_parent')}}">{{trans('main_trans.List_Parents')}}</a> </li>
+                <li> <a href="{{ route('parents.import.form') }}">Import Parents</a> </li>
             </ul>
         </li>
 
@@ -195,6 +196,9 @@
         <!-- Settings-->
         <li>
             <a href="{{route('settings.index')}}"><i class="fas fa-cogs"></i><span class="right-nav-text">{{trans('main_trans.Settings')}} </span></a>
+        </li>
+        <li>
+            <a href="{{route('fiscal-years.index')}}"><i class="fas fa-calender"></i><span class="right-nav-text">Fiscal Years</span></a>
         </li>
 
 

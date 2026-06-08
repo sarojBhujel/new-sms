@@ -29,8 +29,12 @@ class StoreStudents extends FormRequest
             'Grade_id' => 'required',
             'Classroom_id' => 'required',
             'section_id' => 'required',
+            'faculty_id' => 'nullable|exists:faculties,id',
             'parent_id' => 'required',
-            'academic_year' => 'required',
+            'fiscal_year_id' => 'nullable|exists:fiscal_years,id',
+            'admission_no' => 'nullable|string|max:255',
+            'admission_date' => 'nullable|date|date_format:Y-m-d',
+            'roll_no' => 'nullable|string|max:255',
         ];
     }
 }

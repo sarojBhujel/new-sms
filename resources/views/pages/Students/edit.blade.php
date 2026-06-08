@@ -32,6 +32,8 @@
                     <form action="{{route('Students.update','test')}}" method="post" autocomplete="off">
                         @method('PUT')
                         @csrf
+                        <input type="hidden" name="id" value="{{ $Students->id }}">
+                        <input type="hidden" name="fiscal_year_id" value="{{ optional($activeFiscalYear)->id }}">
                     <h6 style="font-family: 'Cairo', sans-serif;color: blue">{{trans('Students_trans.personal_information')}}</h6><br>
                         <div class="row">
 
@@ -120,6 +122,18 @@
 
                             <div class="col-md-2">
                                 <div class="form-group">
+                                    <label for="faculty_id">Faculty :</label>
+                                    <select class="custom-select mr-sm-2" name="faculty_id" id="faculty_id">
+                                        <option selected disabled>{{trans('Parent_trans.Choose')}}...</option>
+                                        @if(optional($studentFiscalDetail)->faculty)
+                                            <option value="{{ optional($studentFiscalDetail)->faculty->id }}" selected>{{ optional($studentFiscalDetail)->faculty->faculty_name }}</option>
+                                        @endif
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="form-group">
                                     <label for="Classroom_id">{{trans('Students_trans.classrooms')}} : <span class="text-danger">*</span></label>
                                     <select class="custom-select mr-sm-2" name="Classroom_id">
                                         <option value="{{$Students->Classroom_id}}">{{$Students->classroom->Name_Class}}</option>
@@ -150,16 +164,29 @@
 
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="academic_year">{{trans('Students_trans.academic_year')}} : <span class="text-danger">*</span></label>
-                                <select class="custom-select mr-sm-2" name="academic_year">
-                                    <option selected disabled>{{trans('Parent_trans.Choose')}}...</option>
-                                    @php
-                                        $current_year = date("Y");
-                                    @endphp
-                                    @for($year=$current_year; $year<=$current_year +1 ;$year++)
-                                        <option value="{{ $year}}" {{$year == $Students->academic_year ? 'selected' : ' '}}>{{ $year }}</option>
-                                    @endfor
-                                </select>
+                                <label for="admission_no">{{trans('Students_trans.admission_no')}} :</label>
+                                <input class="form-control" name="admission_no" type="text" value="{{ old('admission_no', optional($studentFiscalDetail)->admission_no) }}">
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="admission_date">{{trans('Students_trans.admission_date')}} :</label>
+                                <input class="form-control" name="admission_date" type="text" value="{{ old('admission_date', optional(optional($studentFiscalDetail)->admission_date)->format('Y-m-d')) }}" id="datepicker-admission-date" data-date-format="yyyy-mm-dd">
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="roll_no">{{trans('Students_trans.roll_no')}} :</label>
+                                <input class="form-control" name="roll_no" type="text" value="{{ old('roll_no', optional($studentFiscalDetail)->roll_no) }}">
+                            </div>
+                        </div>
+
+                        <div class="col-md-1">
+                            <div class="form-group">
+                                <label>{{trans('Students_trans.academic_year')}} :</label>
+                                <input type="text" class="form-control" value="{{ optional($activeFiscalYear)->name }}" readonly>
                             </div>
                         </div>
                         </div><br>
@@ -189,6 +216,26 @@
                             $.each(data, function (key, value) {
                                 $('select[name="Classroom_id"]').append('<option selected disabled >{{trans('Parent_trans.Choose')}}...</option>');
                                 $('select[name="Classroom_id"]').append('<option value="' + key + '">' + value + '</option>');
+                            });
+
+                            // load faculties for selected grade
+                            $.ajax({
+                                url: '/grades/' + Grade_id + '/faculties',
+                                type: 'GET',
+                                dataType: 'json',
+                                success: function (data) {
+                                    var $faculty = $('#faculty_id');
+                                    $faculty.empty();
+                                    $faculty.append('<option selected disabled>{{ trans('Parent_trans.Choose') }}...</option>');
+                                    if (data.has_faculty) {
+                                        $.each(data.faculties, function (key, value) {
+                                            $faculty.append('<option value="' + value.id + '">' + value.faculty_name + '</option>');
+                                        });
+                                        $faculty.prop('disabled', false);
+                                    } else {
+                                        $faculty.prop('disabled', true);
+                                    }
+                                }
                             });
 
                         },

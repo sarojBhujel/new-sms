@@ -67,6 +67,7 @@ class GradeController extends Controller
 
             $Grade->Name = $request->Name;
             $Grade->Notes = $request->Notes;
+            $Grade->has_faculty = $request->has('has_faculty') ? 1 : 0;
             $Grade->save();
 
             toastr()->success('Data has been saved successfully');
@@ -97,6 +98,7 @@ class GradeController extends Controller
             $Grade->update([
                 'Name' => $request->Name,
                 'Notes' => $request->Notes,
+                'has_faculty' => $request->has('has_faculty') ? 1 : 0,
             ]);
 
                 return response()->json(['message' => 'Grade updated successfully.', 'grade' => $Grade]);

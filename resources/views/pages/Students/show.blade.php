@@ -52,9 +52,9 @@
                                             <th scope="row">{{trans('Students_trans.Grade')}}</th>
                                             <td>{{ $Student->grade->Name }}</td>
                                             <th scope="row">{{trans('Students_trans.classrooms')}}</th>
-                                            <td>{{$Student->classroom->Name_Class}}</td>
+                                            <td>{{ optional($Student->currentFiscalDetail->classroom)->Name_Class ?: $Student->classroom->Name_Class }}</td>
                                             <th scope="row">{{trans('Students_trans.section')}}</th>
-                                            <td>{{$Student->section->Name_Section}}</td>
+                                            <td>{{ optional($Student->currentFiscalDetail->section)->Name_Section ?: $Student->section->Name_Section }}</td>
                                             <th scope="row">{{trans('Students_trans.Date_of_Birth')}}</th>
                                             <td>{{ $Student->Date_Birth}}</td>
                                         </tr>
@@ -63,7 +63,17 @@
                                             <th scope="row">{{trans('Students_trans.parent')}}</th>
                                             <td>{{ $Student->myparent->Name_Father}}</td>
                                             <th scope="row">{{trans('Students_trans.academic_year')}}</th>
-                                            <td>{{ $Student->academic_year }}</td>
+                                            <td>{{ optional($Student->currentFiscalDetail->fiscalYear)->name ?: $Student->academic_year }}</td>
+                                            <th scope="row">{{trans('Students_trans.admission_no')}}</th>
+                                            <td>{{ optional($Student->currentFiscalDetail)->admission_no }}</td>
+                                            <th scope="row">{{trans('Students_trans.roll_no')}}</th>
+                                            <td>{{ optional($Student->currentFiscalDetail)->roll_no }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">{{trans('Students_trans.admission_date')}}</th>
+                                            <td>{{ optional($Student->currentFiscalDetail)->admission_date }}</td>
+                                            <th scope="row"></th>
+                                            <td></td>
                                             <th scope="row"></th>
                                             <td></td>
                                             <th scope="row"></th>

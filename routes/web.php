@@ -47,6 +47,12 @@ Route::group(
             Route::delete('grades/{id}', 'GradeController@destroy')->name('grades.destroy.ajax');
         });
 
+        //==============================Fiscal Years============================
+        Route::group(['namespace' => 'App\Http\Controllers\FiscalYears'], function () {
+            Route::resource('fiscal-years', 'FiscalYearController');
+            Route::post('fiscal-years/{id}/activate', 'FiscalYearController@activate')->name('fiscal-years.activate');
+        });
+
         //==============================Classrooms============================
         Route::group(['namespace' => 'App\Http\Controllers\Classrooms'], function () {
             Route::resource('Classrooms', 'ClassroomController');
@@ -68,6 +74,12 @@ Route::group(
         //==============================Parents============================
         Route::view('add_parent', 'livewire.show_Form')->name('add_parent');
 
+        Route::group(['namespace' => 'App\Http\Controllers\Parents'], function () {
+            Route::get('parents/import', 'ParentController@importForm')->name('parents.import.form');
+            Route::post('parents/import', 'ParentController@import')->name('parents.import');
+            Route::get('parents/import-template', 'ParentController@downloadTemplate')->name('parents.import.template');
+        });
+
         //==============================Teachers============================
         Route::group(['namespace' => 'App\Http\Controllers\Teachers'], function () {
 
@@ -80,6 +92,10 @@ Route::group(
         Route::group(['namespace' => 'App\Http\Controllers\Students'], function () {
 
             Route::resource('Students', 'StudentController');
+            Route::get('Students/{id}/id-card', 'StudentController@idCard')->name('Students.id-card');
+            Route::get('students/{id}/id-card', 'StudentController@idCard');
+            Route::get('Students/import-template', 'StudentController@downloadImportTemplate')->name('Students.import.template');
+            Route::post('Students/import', 'StudentController@import')->name('Students.import');
             Route::get('indirect_admin', 'OnlineClasseController@indirectCreate')->name('indirect.create');
             Route::post('indirect_admin', 'OnlineClasseController@storeIndirect')->name('indirect.store');
             Route::resource('online_classes', 'OnlineClasseController');
@@ -105,6 +121,15 @@ Route::group(
         //==============================Subjects============================
         Route::group(['namespace' => 'App\Http\Controllers\Subjects'], function () {
             Route::resource('subjects', 'SubjectController');
+        });
+
+        //==============================Faculties============================
+        Route::group(['namespace' => 'App\Http\Controllers\Faculties'], function () {
+            Route::resource('Faculties', 'FacultyController');
+            Route::get('Faculties/edit/{id}', 'FacultyController@edit')->name('faculties.edit.ajax');
+            Route::patch('Faculties/{id}', 'FacultyController@update')->name('faculties.update.ajax');
+            Route::delete('Faculties/{id}', 'FacultyController@destroy')->name('faculties.destroy.ajax');
+            Route::get('grades/{id}/faculties', 'FacultyController@byGrade')->name('grades.faculties');
         });
 
         //==============================Quizzes============================

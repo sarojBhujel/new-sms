@@ -64,6 +64,19 @@ class Student extends Authenticatable
         return $this->morphMany('App\Models\Image', 'imageable');
     }
 
+    public function studentFiscalDetails()
+    {
+        return $this->hasMany(StudentFiscalDetail::class, 'student_id');
+    }
+
+    public function currentFiscalDetail()
+    {
+        return $this->hasOne(StudentFiscalDetail::class, 'student_id')
+            ->whereHas('fiscalYear', function ($query) {
+                $query->where('status', true);
+            });
+    }
+
     // علاقة بين جدول سدادت الطلاب وجدول الطلاب لجلب اجمالي المدفوعات والمتبقي
     public function student_account()
     {
