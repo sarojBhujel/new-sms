@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Student;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreStudents extends FormRequest
@@ -18,10 +19,31 @@ class StoreStudents extends FormRequest
 
     public function rules()
     {
+        $createLoginCredentials = $this->boolean('create_login_credentials');
+        $isUpdate = $this->filled('id');
+        $existingStudent = $isUpdate ? Student::find($this->id) : null;
+        $hasExistingPassword = $existingStudent && !empty($existingStudent->password);
+
+        $emailRule = $createLoginCredentials
+            ? 'required|email|unique:students,email,' . $this->id
+            : 'nullable|email|unique:students,email,' . $this->id;
+
+        $passwordRule = 'nullable|string|min:6|max:64';
+
+        if ($createLoginCredentials) {
+            if ($isUpdate) {
+                $passwordRule = $hasExistingPassword
+                    ? 'nullable|string|min:6|max:64'
+                    : 'required|string|min:6|max:64';
+            } else {
+                $passwordRule = 'required|string|min:6|max:64';
+            }
+        }
+
         return [
             'name' => 'required',
-            'email' => 'required|email|unique:students,email,'.$this->id,
-            'password' => 'required|string|min:6|max:64',
+            'email' => $emailRule,
+            'password' => $passwordRule,
             'gender_id' => 'required',
             'nationalitie_id' => 'required',
             'blood_id' => 'required',

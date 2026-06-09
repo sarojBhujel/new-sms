@@ -34,9 +34,9 @@
                     {{ trans('My_Classes_trans.add_class') }}
                 </button>
 
-                <button type="button" class="button x-small" id="btn_delete_all">
+                {{-- <button type="button" class="button x-small" id="btn_delete_all">
                     {{ trans('My_Classes_trans.delete_checkbox') }}
-                </button>
+                </button> --}}
 
                 <br><br>
 
@@ -57,8 +57,8 @@
                         data-page-length="50" style="text-align: center">
                         <thead>
                             <tr>
-                                <th><input name="select_all" id="example-select-all" type="checkbox"
-                                        onclick="CheckAll('box1', this)" /></th>
+                                {{-- <th><input name="select_all" id="example-select-all" type="checkbox"
+                                        onclick="CheckAll('box1', this)" /></th> --}}
                                 <th>#</th>
                                 <th>Class Name</th>
                                 <th>Grade</th>
@@ -292,14 +292,14 @@
                     }
                 },
                 columns: [
-                    {
-                        data: 'id',
-                        render: function (data) {
-                            return '<input type="checkbox" value="' + data + '" class="box1">';
-                        },
-                        orderable: false,
-                        searchable: false,
-                    },
+                    //{
+                      //  data: 'id',
+                        //render: function (data) {
+                          //  return '<input type="checkbox" value="' + data + '" class="box1">';
+                        //},
+                        //orderable: false,
+                        //searchable: false,
+                    //},
                     {
                         data: 'id',
                         render: function (data, type, row, meta) {

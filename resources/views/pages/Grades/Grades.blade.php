@@ -2,16 +2,17 @@
 @section('css')
     @toastr_css
 @section('title')
-    {{ trans('Grades_trans.title_page') }}
+    Grades
 @stop
 @endsection
 @section('page-header')
-<!-- breadcrumb -->
+    <!-- breadcrumb -->
 @section('PageTitle')
-    {{ trans('main_trans.Grades') }}
+    Grades
 @stop
 <!-- breadcrumb -->
 @endsection
+<!-- breadcrumb -->
 @section('content')
 <!-- row -->
 <div class="row">
@@ -68,7 +69,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 style="font-family: 'Cairo', sans-serif;" class="modal-title" id="editGradeLabel">
-                        {{ trans('Grades_trans.edit_Grade') }}
+                        Edit Grade
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -88,6 +89,10 @@
                         <div class="form-group mt-3">
                             <label for="edit_Notes">{{ trans('Grades_trans.Notes') }} :</label>
                             <textarea class="form-control" id="edit_Notes" name="Notes" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit_has_faculty">Has Faculty:</label>
+                            <input type="checkbox" id="edit_has_faculty" name="has_faculty" value="1">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('Grades_trans.Close') }}</button>
@@ -169,20 +174,12 @@
             </div>
         </div>
     </div>
-
-                                <div class="form-group mt-3">
-                                    <label for="edit_Notes">{{ trans('Grades_trans.Notes') }} :</label>
-                                    <textarea class="form-control" id="edit_Notes" name="Notes" rows="3"></textarea>
-                                </div>
-                                <div class="form-group mt-3">
-                                    <label for="edit_has_faculty">Has Faculty:</label>
-                                    <input type="checkbox" id="edit_has_faculty" name="has_faculty" value="1">
-                                </div>
+</div>
+@endsection
 @section('js')
 @toastr_js
 @toastr_render
-@endsection
-@push('js')
+
     <script>
         $(function () {
             $.ajaxSetup({
@@ -254,7 +251,7 @@
                     $('#edit_grade_id').val(grade.id);
                     $('#edit_Name').val(grade.Name);
                     $('#edit_Notes').val(grade.Notes);
-                        $('#edit_has_faculty').prop('checked', grade.has_faculty ? true : false);
+                    $('#edit_has_faculty').prop('checked', grade.has_faculty == 1);
                     editModal.modal('show');
                 }).fail(function () {
                     toastr.error('Unable to load grade data.');
@@ -324,4 +321,4 @@
             });
         });
     </script>
-@endpush
+@endsection

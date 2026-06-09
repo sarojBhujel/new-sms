@@ -45,8 +45,8 @@ class FacultyController extends Controller
                 'data' => $data,
             ]);
         }
-
-        return view('pages.Faculties.Faculties');
+        $data['grades'] = Grade::where('has_faculty', true)->get(['id', 'Name']);
+        return view('pages.Faculties.Faculties',$data);
     }
 
     public function create()

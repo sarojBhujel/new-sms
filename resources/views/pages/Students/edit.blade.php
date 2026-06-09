@@ -46,18 +46,27 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>{{trans('Students_trans.email')}} : </label>
-                                    <input type="email" value="{{ $Students->email }}" name="email" class="form-control" >
+                            @php $hasLoginCredentials = !empty($Students->password); @endphp
+                            <div class="col-md-12">
+                                <div class="form-group custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="create_login_credentials" name="create_login_credentials" value="1" {{ $hasLoginCredentials ? 'checked' : '' }}>
+                                    <label class="custom-control-label" for="create_login_credentials">Create Login Credentials</label>
                                 </div>
                             </div>
 
+                            <div id="credentials-section" style="width:100%;{{ $hasLoginCredentials ? '' : 'display:none;' }}">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>{{trans('Students_trans.email')}} : </label>
+                                        <input type="email" value="{{ old('email', $Students->email) }}" name="email" class="form-control" >
+                                    </div>
+                                </div>
 
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>{{trans('Students_trans.password')}} :</label>
-                                    <input value="{{ $Students->password }}" type="password" name="password" class="form-control" >
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>{{trans('Students_trans.password')}} :</label>
+                                        <input type="password" name="password" class="form-control" placeholder="Leave blank to keep the current password">
+                                    </div>
                                 </div>
                             </div>
 
@@ -203,7 +212,15 @@
     @toastr_js
     @toastr_render
     <script>
+        function toggleCredentialsSection() {
+            var isChecked = $('#create_login_credentials').is(':checked');
+            $('#credentials-section').toggle(isChecked);
+        }
+
         $(document).ready(function () {
+            toggleCredentialsSection();
+            $('#create_login_credentials').on('change', toggleCredentialsSection);
+
             $('select[name="Grade_id"]').on('change', function () {
                 var Grade_id = $(this).val();
                 if (Grade_id) {

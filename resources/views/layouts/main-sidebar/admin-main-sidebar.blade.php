@@ -21,6 +21,7 @@
             </a>
             <ul id="Grades-menu" class="collapse" data-parent="#sidebarnav">
                 <li><a href="{{route('Grades.index')}}">{{trans('main_trans.Grades_list')}}</a></li>
+                <li><a href="{{route('Faculties.index')}}">Faculties List</a></li>
 
             </ul>
         </li>
@@ -180,7 +181,7 @@
         </li>
 
 
-        <!-- Online classes-->
+        {{-- <!-- Online classes-->
         <li>
             <a href="javascript:void(0);" data-toggle="collapse" data-target="#Onlineclasses-icon">
                 <div class="pull-left"><i class="fas fa-video"></i><span class="right-nav-text">{{trans('main_trans.Onlineclasses')}}</span></div>
@@ -190,7 +191,7 @@
             <ul id="Onlineclasses-icon" class="collapse" data-parent="#sidebarnav">
                 <li> <a href="{{route('online_classes.index')}}">Zoom Online Classes</a> </li>
             </ul>
-        </li>
+        </li> --}}
 
 
         <!-- Settings-->

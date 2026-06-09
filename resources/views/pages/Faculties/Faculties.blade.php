@@ -98,7 +98,7 @@
                         <div class="form-group">
                             <label for="edit_grade_id">Grade:</label>
                             <select id="edit_grade_id" class="form-control" name="grade_id" required>
-                                @foreach(\App\Models\Grade::all() as $grade)
+                                @foreach($grades as $grade)
                                     <option value="{{ $grade->id }}">{{ $grade->Name }}</option>
                                 @endforeach
                             </select>
@@ -163,7 +163,7 @@
                         <div class="form-group">
                             <label for="grade_id">Grade:</label>
                             <select id="grade_id" class="form-control" name="grade_id" required>
-                                @foreach(\App\Models\Grade::all() as $grade)
+                                @foreach($grades as $grade)
                                     <option value="{{ $grade->id }}">{{ $grade->Name }}</option>
                                 @endforeach
                             </select>

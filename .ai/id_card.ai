@@ -1,0 +1,145 @@
+
+Implement Student ID Card generation and printable view.
+
+Reference:
+- StudentController
+- Student DataTable listing (Grades/Students style)
+- Existing action buttons pattern (view/edit/delete)
+
+Requirements:
+
+=================================================
+1. Add ID Card Action Button
+=================================================
+
+In Student listing DataTable actions column, add new button:
+
+- ID Card (Print icon)
+
+Example:
+- Eye (View)
+- Edit
+- Delete
+- ID Card (NEW)
+
+Button behavior:
+- Opens ID card page OR printable modal
+- Uses student_id
+
+Route example:
+GET /students/{id}/id-card
+
+=================================================
+2. ID Card Page (Printable)
+=================================================
+
+Create dedicated Blade view:
+
+students/id_card.blade.php
+
+Page must be print-friendly.
+
+Add:
+- Print button (top right)
+- Auto print CSS support (optional)
+
+=================================================
+3. ID Card Layout
+=================================================
+
+Design a single student ID card layout containing:
+
+TOP SECTION:
+- Profile Picture (student photo)
+
+MAIN DETAILS:
+
+- Student Name
+- Class
+- Faculty (if available)
+- Roll No
+- Date of Birth
+- Blood Group
+
+PARENT INFO:
+- Father’s Name
+- Address
+
+=================================================
+4. Signature Section (Bottom)
+=================================================
+
+Add two signature placeholders:
+
+------------------------
+Principal Signature
+------------------------
+
+------------------------
+Guardian Signature
+------------------------
+
+=================================================
+5. Data Source
+=================================================
+
+Load student data including:
+
+- students table
+- student_fiscal_details (current active fiscal year)
+- class
+- faculty
+- parent relationship
+
+Ensure active fiscal year record is used.
+
+=================================================
+6. Print Styling
+=================================================
+
+Add CSS:
+
+- A6 or ID card size layout
+- Center aligned card
+- Border styled card
+- Hidden navigation when printing
+- Clean typography
+
+@media print {
+  .no-print { display: none; }
+}
+
+=================================================
+7. Controller Method
+=================================================
+
+Add method:
+
+StudentController@idCard($id)
+
+Responsibilities:
+- Load student with relationships
+- Fetch active fiscal year detail
+- Return view
+
+=================================================
+8. Optional (Advanced)
+=================================================
+
+If project uses DataTables heavily:
+
+- Allow "Print ID Card" from modal OR new tab
+- Ensure route is fast and lightweight
+
+=================================================
+9. Output
+=================================================
+
+Generate:
+- Route
+- Controller method
+- Blade view
+- DataTable action button update
+- Print CSS
+
+Follow existing UI style and keep implementation minimal and consistent with current system.

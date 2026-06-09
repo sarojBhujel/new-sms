@@ -75,9 +75,9 @@ class StudentRepository implements StudentRepositoryInterface
 
         try {
             $Edit_Students = Student::findOrFail($request->id);
+            $createLoginCredentials = $request->boolean('create_login_credentials');
+
             $Edit_Students->name = $request->name;
-            $Edit_Students->email = $request->email;
-            $Edit_Students->password = Hash::make($request->password);
             $Edit_Students->gender_id = $request->gender_id;
             $Edit_Students->nationalitie_id = $request->nationalitie_id;
             $Edit_Students->blood_id = $request->blood_id;
@@ -98,6 +98,17 @@ class StudentRepository implements StudentRepositoryInterface
 
             if (!$fiscalYear) {
                 throw new \Exception('Please create and activate a fiscal year before performing this operation.');
+            }
+
+            if ($createLoginCredentials) {
+                $Edit_Students->email = $request->email;
+
+                if ($request->filled('password')) {
+                    $Edit_Students->password = Hash::make($request->password);
+                }
+            } else {
+                $Edit_Students->email = null;
+                $Edit_Students->password = null;
             }
 
             $Edit_Students->academic_year = $fiscalYear->name;
@@ -171,10 +182,10 @@ class StudentRepository implements StudentRepositoryInterface
                 throw new \Exception('Please create and activate a fiscal year before performing this operation.');
             }
 
+            $createLoginCredentials = $request->boolean('create_login_credentials');
+
             $students = new Student();
             $students->name = $request->name;
-            $students->email = $request->email;
-            $students->password = Hash::make($request->password);
             $students->gender_id = $request->gender_id;
             $students->nationalitie_id = $request->nationalitie_id;
             $students->blood_id = $request->blood_id;
@@ -183,6 +194,15 @@ class StudentRepository implements StudentRepositoryInterface
             $students->Classroom_id = $request->Classroom_id;
             $students->section_id = $request->section_id;
             $students->parent_id = $request->parent_id;
+
+            if ($createLoginCredentials) {
+                $students->email = $request->email;
+                $students->password = Hash::make($request->password);
+            } else {
+                $students->email = null;
+                $students->password = null;
+            }
+
             $students->academic_year = $fiscalYear->name;
             $students->save();
 

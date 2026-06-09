@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Classrooms\ClassroomController;
 use App\Http\Controllers\FeeNamesController;
+use App\Http\Controllers\Grades\GradeController;
+use App\Http\Controllers\Students\StudentController;
 use App\Models\Classroom;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -41,7 +43,7 @@ Route::group(
 
         //==============================Grades============================
         Route::group(['namespace' => 'App\Http\Controllers\Grades'], function () {
-            Route::resource('Grades', 'GradeController');
+            Route::resource('Grades', GradeController::class);
             Route::get('grades/edit/{id}', 'GradeController@edit')->name('grades.edit.ajax');
             Route::patch('grades/{id}', 'GradeController@update')->name('grades.update.ajax');
             Route::delete('grades/{id}', 'GradeController@destroy')->name('grades.destroy.ajax');
@@ -78,6 +80,7 @@ Route::group(
             Route::get('parents/import', 'ParentController@importForm')->name('parents.import.form');
             Route::post('parents/import', 'ParentController@import')->name('parents.import');
             Route::get('parents/import-template', 'ParentController@downloadTemplate')->name('parents.import.template');
+            Route::post('parents/quick-create', 'ParentController@storeQuick')->name('parents.quick-create');
         });
 
         //==============================Teachers============================
@@ -91,7 +94,7 @@ Route::group(
         //==============================Students============================
         Route::group(['namespace' => 'App\Http\Controllers\Students'], function () {
 
-            Route::resource('Students', 'StudentController');
+            Route::resource('Students', StudentController::class);
             Route::get('Students/{id}/id-card', 'StudentController@idCard')->name('Students.id-card');
             Route::get('students/{id}/id-card', 'StudentController@idCard');
             Route::get('Students/import-template', 'StudentController@downloadImportTemplate')->name('Students.import.template');

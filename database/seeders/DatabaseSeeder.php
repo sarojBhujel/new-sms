@@ -22,12 +22,12 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(BloodTableSeeder::class);
         $this->call(NationalitiesTableSeeder::class);
-        $this->call(ReligionTableSeeder::class);
-        $this->call(SpecializationTableSeeder::class);
         $this->call(GenderTableSeeder::class);
         $this->call(MonthSeeder::class);
         $this->call(UserTableSeeder::class);
         $this->call(SettingsTableSeeder::class);
+        $this->call(SpecializationTableSeeder::class);
+        $this->call(ReligionTableSeeder::class);
 
 
 
