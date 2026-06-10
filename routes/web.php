@@ -92,6 +92,15 @@ Route::group(
 
             Route::resource('Teachers', 'TeacherController');
         });
+
+        //==============================Specializations============================
+        Route::group(['namespace' => 'App\Http\Controllers'], function () {
+            Route::resource('specializations', 'SpecializationController');
+            Route::get('specializations/{id}/edit', 'SpecializationController@edit')->name('specializations.edit.ajax');
+            Route::patch('specializations/{id}', 'SpecializationController@update')->name('specializations.update.ajax');
+            Route::delete('specializations/{id}', 'SpecializationController@destroy')->name('specializations.destroy.ajax');
+        });
+
         Route::get('fee-names/classes', [FeeNamesController::class, 'classes'])->name('fee-names.classes');
         Route::get('nepali-months', function () { return \App\Models\NepaliMonth::orderBy('sequence')->get(); })->name('nepali-months.index');
         Route::resource('fee-names',FeeNamesController::class);

@@ -35,23 +35,33 @@
                              @csrf
                             <div class="form-row">
                                 <div class="col">
-                                    <label for="title">{{trans('Teacher_trans.Email')}}</label>
-                                    <input type="hidden" value="{{$Teachers->id}}" name="id">
-                                    <input type="email" name="Email" value="{{$Teachers->Email}}" class="form-control">
-                                    @error('Email')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="col">
-                                    <label for="title">{{trans('Teacher_trans.Password')}}</label>
-                                    <input type="password" name="Password" value="{{$Teachers->Password}}" class="form-control">
-                                    @error('Password')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                    @enderror
+                                    <div class="form-group custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="create_login_credentials" name="create_login_credentials" value="1" {{ !empty($Teachers->password) ? 'checked' : '' }}>
+                                        <label class="custom-control-label" for="create_login_credentials">Create Login Credentials</label>
+                                    </div>
                                 </div>
                             </div>
-                            <br>
 
+                            <div id="credentials-section" style="display:{{ !empty($Teachers->password) ? 'block' : 'none' }};">
+                                <div class="form-row">
+                                    <div class="col">
+                                        <label for="title">{{trans('Teacher_trans.Email')}}</label>
+                                        <input type="hidden" value="{{$Teachers->id}}" name="id">
+                                        <input type="email" name="Email" value="{{$Teachers->email}}" class="form-control">
+                                        @error('Email')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="col">
+                                        <label for="title">{{trans('Teacher_trans.Password')}}</label>
+                                        <input type="password" name="Password" class="form-control" placeholder="Leave blank to keep current password">
+                                        @error('Password')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
 
                             <div class="form-row">
                                 <div class="col">
@@ -126,4 +136,19 @@
 @section('js')
     @toastr_js
     @toastr_render
+    <script>
+        $(document).ready(function() {
+            const checkbox = $('#create_login_credentials');
+            const credentialsSection = $('#credentials-section');
+
+            // Toggle credentials section visibility
+            checkbox.on('change', function() {
+                if (this.checked) {
+                    credentialsSection.slideDown();
+                } else {
+                    credentialsSection.slideUp();
+                }
+            });
+        });
+    </script>
 @endsection

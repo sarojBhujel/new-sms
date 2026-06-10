@@ -18,7 +18,7 @@ class TeacherRepository implements TeacherRepositoryInterface
 
     public function Getspecialization()
     {
-        return specialization::all();
+        return Specialization::all();
     }
 
     public function GetGender()
@@ -28,16 +28,24 @@ class TeacherRepository implements TeacherRepositoryInterface
 
     public function StoreTeachers($request)
     {
-
         try {
+            $createLoginCredentials = $request->boolean('create_login_credentials');
+            
             $Teachers = new Teacher();
-            $Teachers->email = $request->Email;
-            $Teachers->password =  Hash::make($request->Password);
-            $Teachers->name =$request->Name;
+            $Teachers->name = $request->Name;
             $Teachers->Specialization_id = $request->Specialization_id;
             $Teachers->Gender_id = $request->Gender_id;
             $Teachers->Joining_Date = $request->Joining_Date;
             $Teachers->Address = $request->Address;
+            
+            if ($createLoginCredentials) {
+                $Teachers->email = $request->Email;
+                $Teachers->password = Hash::make($request->Password);
+            } else {
+                $Teachers->email = null;
+                $Teachers->password = null;
+            }
+            
             $Teachers->save();
             toastr()->success('Data has been saved successfully');
             return redirect()->route('Teachers.create');
@@ -57,13 +65,25 @@ class TeacherRepository implements TeacherRepositoryInterface
     {
         try {
             $Teachers = Teacher::findOrFail($request->id);
-            $Teachers->email = $request->Email;
-            $Teachers->password =  Hash::make($request->Password);
-            $Teachers->name =$request->Name
+            $createLoginCredentials = $request->boolean('create_login_credentials');
+            
+            $Teachers->name = $request->Name;
             $Teachers->Specialization_id = $request->Specialization_id;
             $Teachers->Gender_id = $request->Gender_id;
             $Teachers->Joining_Date = $request->Joining_Date;
             $Teachers->Address = $request->Address;
+            
+            if ($createLoginCredentials) {
+                $Teachers->email = $request->Email;
+                
+                if ($request->filled('Password')) {
+                    $Teachers->password = Hash::make($request->Password);
+                }
+            } else {
+                $Teachers->email = null;
+                $Teachers->password = null;
+            }
+            
             $Teachers->save();
             toastr()->success('Data has been Update successfully');
             return redirect()->route('Teachers.index');

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateSpecializationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,7 +15,10 @@ return new class extends Migration
     {
         Schema::create('specializations', function (Blueprint $table) {
             $table->id();
-            $table->string('Name');
+            $table->string('specialization_name')->unique();
+            $table->string('specialization_code')->nullable()->unique();
+            $table->text('description')->nullable();
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }
@@ -29,4 +32,4 @@ return new class extends Migration
     {
         Schema::dropIfExists('specializations');
     }
-};
+}

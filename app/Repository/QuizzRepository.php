@@ -56,7 +56,7 @@ class QuizzRepository implements QuizzRepositoryInterface
     {
         try {
             $quizz = Quizze::findorFail($request->id);
-            $quizz->name =$request->Name
+            $quizz->name =$request->Name;
             $quizz->subject_id = $request->subject_id;
             $quizz->grade_id = $request->Grade_id;
             $quizz->classroom_id = $request->Classroom_id;
