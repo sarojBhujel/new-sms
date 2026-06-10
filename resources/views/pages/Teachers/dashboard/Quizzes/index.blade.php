@@ -2,13 +2,13 @@
 @section('css')
     @toastr_css
 @section('title')
-    قائمة الاختبارات
+    Quizzes List
 @stop
 @endsection
 @section('page-header')
     <!-- breadcrumb -->
 @section('PageTitle')
-    قائمة الاختبارات
+    Quizzes List
 @stop
 <!-- breadcrumb -->
 @endsection
@@ -22,7 +22,7 @@
                         <div class="card card-statistics h-100">
                             <div class="card-body">
                                 <a href="{{route('quizzes.create')}}" class="btn btn-success btn-sm" role="button"
-                                   aria-pressed="true">اضافة اختبار جديد</a><br><br>
+                                   aria-pressed="true">Add New Quiz</a><br><br>
                                 <div class="table-responsive">
                                     <table id="datatable" class="table  table-hover table-sm table-bordered p-0"
                                            data-page-length="50"
@@ -30,12 +30,12 @@
                                         <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>اسم الاختبار</th>
-                                            <th>اسم المعلم</th>
-                                            <th>المرحلة الدراسية</th>
-                                            <th>الصف الدراسي</th>
-                                            <th>القسم</th>
-                                            <th>العمليات</th>
+                                            <th>Quiz Name</th>
+                                            <th>Teacher Name</th>
+                                            <th>Grade</th>
+                                            <th>Classroom</th>
+                                            <th>Section</th>
+                                            <th>Actions</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -53,14 +53,14 @@
                                                             class="fa fa-edit"></i></a>
                                                     <button type="button" class="btn btn-danger btn-sm"
                                                             data-toggle="modal"
-                                                            data-target="#delete_exam{{ $quizze->id }}" title="حذف"><i
+                                                            data-target="#delete_exam{{ $quizze->id }}" title="Delete"><i
                                                             class="fa fa-trash"></i></button>
                                                     <a href="{{route('quizzes.show',$quizze->id)}}"
-                                                       class="btn btn-warning btn-sm" title="عرض الاسئلة" role="button" aria-pressed="true"><i
+                                                       class="btn btn-warning btn-sm" title="View Questions" role="button" aria-pressed="true"><i
                                                             class="fa fa-binoculars"></i></a>
 
                                                     <a href="{{route('student.quizze',$quizze->id)}}"
-                                                       class="btn btn-primary btn-sm" title="عرض الطلاب المختبرين" role="button" aria-pressed="true"><i
+                                                       class="btn btn-primary btn-sm" title="View Examined Students" role="button" aria-pressed="true"><i
                                                             class="fa fa-street-view"></i></a>
 
 
@@ -77,7 +77,7 @@
                                                         <div class="modal-content">
                                                             <div class="modal-header">
                                                                 <h5 style="font-family: 'Cairo', sans-serif;"
-                                                                    class="modal-title" id="exampleModalLabel">حذف اختبار</h5>
+                                                                    class="modal-title" id="exampleModalLabel">Delete Quiz</h5>
                                                                 <button type="button" class="close" data-dismiss="modal"
                                                                         aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>

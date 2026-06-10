@@ -2,13 +2,13 @@
 @section('css')
     @toastr_css
     @section('title')
-        قائمة الطلاب المختبره
+        Students Exam List
     @stop
 @endsection
 @section('page-header')
     <!-- breadcrumb -->
     @section('PageTitle')
-        قائمة الطلاب المختبره
+        Students Exam List
     @stop
     <!-- breadcrumb -->
 @endsection
@@ -28,12 +28,12 @@
                                         <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>اسم الطالب</th>
-                                            <th>اخر سؤال</th>
-                                            <th>الدرجة</th>
-                                            <th>تلاعب</th>
-                                            <th>تاريخ اجراء الاختبار</th>
-                                            <th>العمليات</th>
+                                            <th>Student Name</th>
+                                            <th>Last Question</th>
+                                            <th>Score</th>
+                                            <th>Cheating</th>
+                                            <th>Exam Date</th>
+                                            <th>Actions</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -44,15 +44,15 @@
                                                 <td>{{$degree->question_id}}</td>
                                                 <td>{{$degree->score}}</td>
                                                 @if($degree->abuse == 0)
-                                                    <td style="color: green">لا يوجد تلاعب</td>
+                                                    <td style="color: green">No Cheating</td>
                                                 @else
-                                                    <td style="color: red"> يوجد تلاعب</td>
+                                                    <td style="color: red">Cheating Detected</td>
                                                 @endif
                                                 <td>{{$degree->date}}</td>
                                                 <td>
                                                     <button type="button" class="btn btn-info btn-sm"
                                                             data-toggle="modal"
-                                                            data-target="#repeat_quizze{{ $degree->quizze_id }}" title="إعادة">
+                                                            data-target="#repeat_quizze{{ $degree->quizze_id }}" title="Reopen">
                                                         <i class="fas fa-repeat"></i></button>
                                                 </td>
                                             </tr>
@@ -66,7 +66,7 @@
                                                         <div class="modal-content">
                                                             <div class="modal-header">
                                                                 <h5 style="font-family: 'Cairo', sans-serif;"
-                                                                    class="modal-title" id="exampleModalLabel">فتح إعادة الاختبار للطالب</h5>
+                                                                    class="modal-title" id="exampleModalLabel">Open Re-exam for Student</h5>
                                                                 <button type="button" class="close" data-dismiss="modal"
                                                                         aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>

@@ -48,7 +48,7 @@ Fee Invoices
                                         <td>{{$Fee_invoice->classroom->Name_Class}}</td>
                                         <td>{{$Fee_invoice->description}}</td>
                                         <td>
-                                            <a href="{{route('sons.receipt',$Fee_invoice->student_id)}}" title="المدفوعات" class="btn btn-info btn-sm" role="button" aria-pressed="true"><i class="fa fa-edit"></i></a>
+                                            <a href="{{route('sons.receipt',$Fee_invoice->student_id)}}" title="Payments" class="btn btn-info btn-sm" role="button" aria-pressed="true"><i class="fa fa-edit"></i></a>
                                         </td>
                                     </tr>
                                     @endforeach

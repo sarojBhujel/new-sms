@@ -2,13 +2,13 @@
 @section('css')
     @toastr_css
 @section('title')
-    اضافة سؤال جديد
+    Add New Question
 @stop
 @endsection
 @section('page-header')
     <!-- breadcrumb -->
 @section('PageTitle')
-    اضافة سؤال جديد
+    Add New Question
 @stop
 <!-- breadcrumb -->
 @endsection
@@ -35,7 +35,7 @@
                                 <div class="form-row">
 
                                     <div class="col">
-                                        <label for="title">اسم السؤال</label>
+                                        <label for="title">Question Title</label>
                                         <input type="text" name="title" id="input-name"
                                                class="form-control form-control-alternative" autofocus>
                                         <input type="hidden" value="{{$quizz_id}}" name="quizz_id">
@@ -45,7 +45,7 @@
 
                                 <div class="form-row">
                                     <div class="col">
-                                        <label for="title"> الاجابات <span style="color: red; font-size: smaller"> يجب فصل بعلامه - بين الاسئلة</span> </label>
+                                        <label for="title"> Answers <span style="color: red; font-size: smaller"> Separate answers with '-'</span> </label>
                                         <textarea name="answers" class="form-control" id="exampleFormControlTextarea1"
                                                   rows="4"></textarea>
                                     </div>
@@ -54,7 +54,7 @@
 
                                 <div class="form-row">
                                     <div class="col">
-                                        <label for="title">الاجابة الصحيحة</label>
+                                        <label for="title">Correct Answer</label>
                                         <input type="text" name="right_answer" id="input-name"
                                                class="form-control form-control-alternative" autofocus>
                                     </div>
@@ -64,9 +64,9 @@
                                 <div class="form-row">
                                     <div class="col">
                                         <div class="form-group">
-                                            <label for="Grade_id">الدرجة : <span class="text-danger">*</span></label>
+                                            <label for="Grade_id">Marks : <span class="text-danger">*</span></label>
                                             <select class="custom-select mr-sm-2" name="score">
-                                                <option selected disabled> حدد الدرجة...</option>
+                                                <option selected disabled> Select Marks...</option>
                                                 <option value="5">5</option>
                                                 <option value="10">10</option>
                                                 <option value="15">15</option>
@@ -76,7 +76,7 @@
                                     </div>
                                 </div>
                                 <br>
-                                <button class="btn btn-success btn-sm nextBtn btn-lg pull-right" type="submit">حفظ البيانات</button>
+                                <button class="btn btn-success btn-sm nextBtn btn-lg pull-right" type="submit">Save</button>
                             </form>
                         </div>
                     </div>

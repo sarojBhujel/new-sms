@@ -80,11 +80,11 @@ class StudentRepository implements StudentRepositoryInterface
             $Edit_Students->name = $request->name;
             $Edit_Students->gender_id = $request->gender_id;
             $Edit_Students->nationalitie_id = $request->nationalitie_id;
-            $Edit_Students->blood_id = $request->blood_id;
+            $Edit_Students->blood_id = $request->input('blood_id') ?: null;
             $Edit_Students->Date_Birth = $request->Date_Birth;
             $Edit_Students->Grade_id = $request->Grade_id;
             $Edit_Students->Classroom_id = $request->Classroom_id;
-            $Edit_Students->section_id = $request->section_id;
+            $Edit_Students->section_id = $request->input('section_id') ?: null;
             $Edit_Students->parent_id = $request->parent_id;
 
             $fiscalYear = null;
@@ -125,7 +125,7 @@ class StudentRepository implements StudentRepositoryInterface
                     'admission_no' => $request->admission_no,
                     'admission_date' => $request->admission_date,
                     'class_id' => $request->Classroom_id,
-                    'section_id' => $request->section_id,
+                    'section_id' => $request->input('section_id') ?: null,
                     'roll_no' => $request->roll_no,
                 ]
             );
@@ -188,11 +188,11 @@ class StudentRepository implements StudentRepositoryInterface
             $students->name = $request->name;
             $students->gender_id = $request->gender_id;
             $students->nationalitie_id = $request->nationalitie_id;
-            $students->blood_id = $request->blood_id;
+            $students->blood_id = $request->input('blood_id') ?: null;
             $students->Date_Birth = $request->Date_Birth;
             $students->Grade_id = $request->Grade_id;
             $students->Classroom_id = $request->Classroom_id;
-            $students->section_id = $request->section_id;
+            $students->section_id = $request->input('section_id') ?: null;
             $students->parent_id = $request->parent_id;
 
             if ($createLoginCredentials) {
@@ -214,7 +214,7 @@ class StudentRepository implements StudentRepositoryInterface
                 'admission_no' => $request->admission_no,
                 'admission_date' => $request->admission_date,
                 'class_id' => $request->Classroom_id,
-                'section_id' => $request->section_id,
+                'section_id' => $request->input('section_id') ?: null,
                 'roll_no' => $request->roll_no,
             ]);
 

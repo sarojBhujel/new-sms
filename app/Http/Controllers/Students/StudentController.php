@@ -93,6 +93,7 @@ class StudentController extends Controller
 
     public function store(StoreStudents $request)
     {
+        // dd($request->all());
         return $this->Student->Store_Student($request);
     }
 
@@ -171,6 +172,7 @@ class StudentController extends Controller
 
     public function import(ImportStudentsRequest $request)
     {
+       
         $activeFiscalYear = FiscalYear::active();
 
         if (!$activeFiscalYear) {

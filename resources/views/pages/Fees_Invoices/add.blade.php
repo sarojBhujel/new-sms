@@ -2,13 +2,13 @@
 @section('css')
     @toastr_css
 @section('title')
-    اضافة فاتورة جديدة
+    Add New Invoice
 @stop
 @endsection
 @section('page-header')
     <!-- breadcrumb -->
 @section('PageTitle')
-اضافة فاتورة جديدة {{$student->name}}
+Add New Invoice {{$student->name}}
 @stop
 <!-- breadcrumb -->
 @endsection
@@ -48,7 +48,7 @@
                                                     <label for="Name" class="mr-sm-2">Fee Type</label>
                                                     <div class="box">
                                                         <select class="fancyselect" name="fee_id" required>
-                                                            <option value="">-- اختار من القائمة --</option>
+                                                            <option value="">-- Select from list --</option>
                                                             @foreach($fees as $fee)
                                                                 <option value="{{ $fee->id }}">{{ $fee->title }}</option>
                                                             @endforeach
@@ -58,10 +58,10 @@
                                                 </div>
 
                                                 <div class="col">
-                                                    <label for="Name" class="mr-sm-2">المبلغ</label>
+                                                    <label for="Name" class="mr-sm-2">Amount</label>
                                                     <div class="box">
                                                         <select class="fancyselect" name="amount" required>
-                                                            <option value="">-- اختار من القائمة --</option>
+                                                            <option value="">-- Select from list --</option>
                                                             @foreach($fees as $fee)
                                                                 <option value="{{ $fee->amount }}">{{ $fee->amount }}</option>
                                                             @endforeach

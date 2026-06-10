@@ -3,13 +3,13 @@
     @toastr_css
     @livewireStyles
     @section('title')
-        إجراء اختبار
+        Take Exam
     @stop
 @endsection
 @section('page-header')
     <!-- breadcrumb -->
     @section('PageTitle')
-        إجراء اختبار
+        Take Exam
     @stop
     <!-- breadcrumb -->
 @endsection

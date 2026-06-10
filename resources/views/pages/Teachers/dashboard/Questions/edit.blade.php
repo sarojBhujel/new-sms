@@ -2,13 +2,13 @@
 @section('css')
     @toastr_css
 @section('title')
-    تعديل سؤال
+    Edit Question
 @stop
 @endsection
 @section('page-header')
     <!-- breadcrumb -->
 @section('PageTitle')
-    تعديل سؤال :<span class="text-danger">{{$question->title}}</span>
+    Edit Question :<span class="text-danger">{{$question->title}}</span>
 @stop
 <!-- breadcrumb -->
 @endsection
@@ -36,7 +36,7 @@
                                 <div class="form-row">
 
                                     <div class="col">
-                                        <label for="title">اسم السؤال</label>
+                                        <label for="title">Question Title</label>
                                         <input type="text" name="title" id="input-name"
                                                class="form-control form-control-alternative" value="{{$question->title}}">
 
@@ -46,7 +46,7 @@
 
                                 <div class="form-row">
                                     <div class="col">
-                                        <label for="title">الاجابات</label>
+                                        <label for="title">Answers</label>
                                         <textarea name="answers" class="form-control" id="exampleFormControlTextarea1" rows="4">{{$question->answers}}</textarea>
                                     </div>
                                 </div>
@@ -54,7 +54,7 @@
 
                                 <div class="form-row">
                                     <div class="col">
-                                        <label for="title">الاجابة الصحيحة</label>
+                                        <label for="title">Correct Answer</label>
                                         <input type="text" name="right_answer" id="input-name" class="form-control form-control-alternative" value="{{$question->right_answer}}">
                                     </div>
                                 </div>
@@ -63,9 +63,9 @@
                                 <div class="form-row">
                                     <div class="col">
                                         <div class="form-group">
-                                            <label for="Grade_id">الدرجة : <span class="text-danger">*</span></label>
+                                            <label for="Grade_id">Marks : <span class="text-danger">*</span></label>
                                             <select class="custom-select mr-sm-2" name="score">
-                                                <option selected disabled> حدد الدرجة...</option>
+                                                <option selected disabled> Select Marks...</option>
                                                 <option value="5" {{$question->score == 5 ? 'selected':''}}>5</option>
                                                 <option value="10" {{$question->score == 10 ? 'selected':''}}>10</option>
                                                 <option value="15" {{$question->score == 15 ? 'selected':''}}>15</option>
@@ -75,7 +75,7 @@
                                     </div>
                                 </div>
                                 <br>
-                                <button class="btn btn-success btn-sm nextBtn btn-lg pull-right" type="submit">حفظ البيانات</button>
+                                <button class="btn btn-success btn-sm nextBtn btn-lg pull-right" type="submit">Save</button>
                             </form>
                         </div>
                     </div>

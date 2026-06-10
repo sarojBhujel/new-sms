@@ -7,7 +7,6 @@ return [
     'Delete_Teacher'=>'Delete Teacher',
     'Email'=>'Email',
     'Password'=>'Password',
-    'Name_ar'=>'Name_ar',
     'Name'=>'Name',
     'specialization'=>'specialization',
     'Gender'=>'Gender',

@@ -2,13 +2,13 @@
 @section('css')
     @toastr_css
 @section('title')
-    اضافة اختبار جديد
+    Add New Quiz
 @stop
 @endsection
 @section('page-header')
     <!-- breadcrumb -->
 @section('PageTitle')
-    اضافة اختبار جديد
+    Add New Quiz
 @stop
 <!-- breadcrumb -->
 @endsection
@@ -34,13 +34,10 @@
                                 @csrf
 
                                 <div class="form-row">
-                                    <div class="col">
-                                        <label for="title">اسم الاختبار باللغة العربية</label>
-                                        <input type="text" name="Name_ar" class="form-control">
-                                    </div>
+                                    
 
                                     <div class="col">
-                                        <label for="title">اسم الاختبار باللغة الانجليزية</label>
+                                        <label for="title">Quiz Name (English)</label>
                                         <input type="text" name="Name" class="form-control">
                                     </div>
                                 </div>
@@ -50,9 +47,9 @@
 
                                     <div class="col">
                                         <div class="form-group">
-                                            <label for="Grade_id">المادة الدراسية : <span class="text-danger">*</span></label>
+                                            <label for="Grade_id">Subject : <span class="text-danger">*</span></label>
                                             <select class="custom-select mr-sm-2" name="subject_id">
-                                                <option selected disabled>حدد المادة الدراسية...</option>
+                                                <option selected disabled>Select subject...</option>
                                                 @foreach($subjects as $subject)
                                                     <option  value="{{ $subject->id }}">{{ $subject->name }}</option>
                                                 @endforeach
@@ -95,7 +92,7 @@
                                     </div>
 
                                 </div>
-                                <button class="btn btn-success btn-sm nextBtn btn-lg pull-right" type="submit">حفظ البيانات</button>
+                                <button class="btn btn-success btn-sm nextBtn btn-lg pull-right" type="submit">Save</button>
                             </form>
                         </div>
                     </div>

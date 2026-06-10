@@ -41,7 +41,7 @@ class Student extends Authenticatable
 
     public function section()
     {
-        return $this->belongsTo('App\Models\Section', 'section_id');
+        return $this->belongsTo('App\Models\Section', 'section_id')->withDefault();
     }
 
     // علاقة بين الطلاب والجنسيات  لجلب اسم الجنسية  في جدول الجنسيات

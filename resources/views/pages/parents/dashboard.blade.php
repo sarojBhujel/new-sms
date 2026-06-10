@@ -40,7 +40,7 @@
             <div class="page-title" >
                 <div class="row">
                     <div class="col-sm-6" >
-                        <h4 class="mb-0" style="font-family: 'Cairo', sans-serif">مرحبا بك : {{auth()->user()->Name_Father}}</h4>
+                        <h4 class="mb-0" style="font-family: 'Cairo', sans-serif">Welcome : {{auth()->user()->Name_Father}}</h4>
                     </div><br><br>
                     <div class="col-sm-6">
                         <ol class="breadcrumb pt-0 pr-0 float-left float-sm-right">
@@ -61,25 +61,25 @@
                                             <div class="text-center">
                                                 <h5 style="font-family: 'Cairo', sans-serif"
                                                     class="card-title">{{$son->name}}</h5>
-                                                <p class="text-muted mb-4">معلومات الطالب</p>
+                                                <p class="text-muted mb-4">Student Info</p>
                                             </div>
                                             <div>
                                                 <div class="d-flex justify-content-between">
-                                                    <span>المرحلة</span><span>{{$son->grade->Name}}</span>
+                                                    <span>Grade</span><span>{{$son->grade->Name}}</span>
                                                 </div>
                                                 <div class="d-flex justify-content-between">
-                                                    <span>الصف</span><span>{{$son->classroom->Name_Class}}</span>
+                                                    <span>Class</span><span>{{$son->classroom->Name_Class}}</span>
                                                 </div>
                                                 <div class="d-flex justify-content-between">
-                                                    <span>القسم</span><span>{{$son->section->Name_Section}}</span>
+                                                    <span>Section</span><span>{{$son->section->Name_Section}}</span>
                                                 </div>
 
                                                 <div class="d-flex justify-content-between">
 {{--                                                    @if(\App\Models\Degree::where('student_id',$son->id)->count() == 0)--}}
-{{--                                                        <span>عدد الاختبارات</span><span--}}
+{{--                                                        <span>Exams Count</span><span--}}
 {{--                                                            class="text-danger">{{\App\Models\Degree::where('student_id',$son->id)->count()}}</span>--}}
 {{--                                                    @else--}}
-{{--                                                        <span>عدد الاختبارات</span><span--}}
+{{--                                                        <span>Exams Count</span><span--}}
 {{--                                                            class="text-success">{{\App\Models\Degree::where('student_id',$son->id)->count()}}</span>--}}
 {{--                                                    @endif--}}
                                                 </div>

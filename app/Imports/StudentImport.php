@@ -9,7 +9,6 @@ use App\Models\Nationalitie;
 use App\Models\Section;
 use App\Models\Student;
 use App\Models\StudentFiscalDetail;
-use App\Models\Type_Blood;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -36,7 +35,6 @@ class StudentImport implements ToModel, WithHeadingRow, WithValidation, SkipsOnF
 
     private FiscalYear $activeFiscalYear;
     private int $defaultNationalitieId;
-    private int $defaultBloodTypeId;
 
     public function __construct()
     {
@@ -47,14 +45,12 @@ class StudentImport implements ToModel, WithHeadingRow, WithValidation, SkipsOnF
         }
 
         $nationality = Nationalitie::first();
-        $bloodType = Type_Blood::first();
 
-        if (!$nationality || !$bloodType) {
-            throw new \Exception('Default nationality or blood type data is missing.');
+        if (!$nationality) {
+            throw new \Exception('Default nationality data is missing.');
         }
 
         $this->defaultNationalitieId = $nationality->id;
-        $this->defaultBloodTypeId = $bloodType->id;
     }
 
     public function model(array $row)
@@ -69,17 +65,13 @@ class StudentImport implements ToModel, WithHeadingRow, WithValidation, SkipsOnF
         }
 
         $classroom = Classroom::find($row['class_id']);
-        $section = Section::find($row['section_id']);
+        $section = !empty($row['section_id']) ? Section::find($row['section_id']) : null;
 
         if (!$classroom) {
             throw new \Exception("Class ID {$row['class_id']} not found.");
         }
 
-        if (!$section) {
-            throw new \Exception("Section ID {$row['section_id']} not found.");
-        }
-
-        if ($section->Class_id !== $classroom->id) {
+        if ($section && $section->Class_id !== $classroom->id) {
             throw new \Exception("Section {$section->id} does not belong to class {$classroom->id}.");
         }
 
@@ -92,11 +84,11 @@ class StudentImport implements ToModel, WithHeadingRow, WithValidation, SkipsOnF
             'password' => Hash::make(Str::random(12)),
             'gender_id' => $gender->id,
             'nationalitie_id' => $this->defaultNationalitieId,
-            'blood_id' => $this->defaultBloodTypeId,
+            'blood_id' => $row['blood_id'] ?? null,
             'Date_Birth' => $row['dob'],
             'Grade_id' => $classroom->Grade_id,
             'Classroom_id' => $classroom->id,
-            'section_id' => $section->id,
+            'section_id' => $section?->id,
             'parent_id' => $row['parent_id'],
             'academic_year' => $this->activeFiscalYear->name,
             'phone' => $row['phone'] ?? null,
@@ -110,7 +102,7 @@ class StudentImport implements ToModel, WithHeadingRow, WithValidation, SkipsOnF
             'admission_no' => $row['admission_no'] ?? null,
             'admission_date' => $row['admission_date'] ?? null,
             'class_id' => $classroom->id,
-            'section_id' => $section->id,
+            'section_id' => $section?->id,
             'roll_no' => $row['roll_no'] ?? null,
         ]);
 
@@ -130,7 +122,8 @@ class StudentImport implements ToModel, WithHeadingRow, WithValidation, SkipsOnF
             'admission_no' => 'nullable|string|max:255',
             'admission_date' => 'nullable|date|date_format:Y-m-d',
             'class_id' => 'required|exists:classrooms,id',
-            'section_id' => 'required|exists:sections,id',
+            'section_id' => 'nullable|exists:sections,id',
+            'blood_id' => 'nullable|exists:type__bloods,id',
             'roll_no' => 'nullable|string|max:255',
         ];
     }

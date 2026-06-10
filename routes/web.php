@@ -24,9 +24,13 @@ Route::get('/', 'App\Http\Controllers\HomeController@index')->name('selection');
 
 Route::group(['namespace' => 'App\Http\Controllers\Auth'], function () {
 
+    Route::get('/login', function () {
+        return redirect()->route('login.show', ['type' => 'student']);
+    })->middleware('guest')->name('login');
+
     Route::get('/login/{type}', 'LoginController@loginForm')->middleware('guest')->name('login.show');
 
-    Route::post('/login', 'LoginController@login')->name('login');
+    Route::post('/login', 'LoginController@login')->name('login.submit');
 
     Route::get('/logout/{type}', 'LoginController@logout')->name('logout');
 });
@@ -97,7 +101,7 @@ Route::group(
             Route::resource('Students', StudentController::class);
             Route::get('Students/{id}/id-card', 'StudentController@idCard')->name('Students.id-card');
             Route::get('students/{id}/id-card', 'StudentController@idCard');
-            Route::get('Students/import-template', 'StudentController@downloadImportTemplate')->name('Students.import.template');
+            Route::get('students-import-template', 'StudentController@downloadImportTemplate')->name('Students.import.template');
             Route::post('Students/import', 'StudentController@import')->name('Students.import');
             Route::get('indirect_admin', 'OnlineClasseController@indirectCreate')->name('indirect.create');
             Route::post('indirect_admin', 'OnlineClasseController@storeIndirect')->name('indirect.store');

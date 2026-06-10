@@ -35,15 +35,11 @@ Edit Quizz {{$quizz->name}}
                                 @method('PUT')
                                 <div class="form-row">
 
-                                    <div class="col">
-                                        <label for="title">Exam Name in Arabic</label>
-                                        <input type="text" name="Name_ar" value="{{$quizz->name}}" class="form-control">
-                                        <input type="hidden" name="id" value="{{$quizz->id}}">
-                                    </div>
-
+                                    
                                     <div class="col">
                                         <label for="title">Exam Name</label>
                                         <input type="text" name="Name" value="{{$quizz->name}}" class="form-control">
+                                        <input type="hidden" name="id" value="{{$quizz->id}}">
                                     </div>
                                 </div>
                                 <br>

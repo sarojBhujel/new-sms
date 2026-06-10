@@ -29,7 +29,7 @@
                     </div>
                 @endif
 
-                <h6 style="color: red;font-family: Cairo">المرحلة الدراسية القديمة</h6><br>
+                <h6 style="color: red;font-family: Cairo">Old Grade</h6><br>
 
                 <form method="post" action="{{ route('Promotion.store') }}">
                     @csrf
@@ -76,7 +76,7 @@
 
                     </div>
                     <br>
-                    <h6 style="color: red;font-family: Cairo">المرحلة الدراسية الجديدة</h6><br>
+                    <h6 style="color: red;font-family: Cairo">New Grade</h6><br>
 
                     <div class="form-row">
                         <div class="form-group col">
@@ -119,7 +119,7 @@
                         </div>
 
                     </div>
-                    <button type="submit" class="btn btn-primary">تاكيد</button>
+                    <button type="submit" class="btn btn-primary">Confirm</button>
                 </form>
 
             </div>

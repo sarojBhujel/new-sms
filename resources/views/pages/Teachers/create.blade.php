@@ -55,14 +55,7 @@
 
                             <div class="form-row">
                                 <div class="col">
-                                    <label for="title">{{trans('Teacher_trans.Name_ar')}}</label>
-                                    <input type="text" name="Name_ar" class="form-control">
-                                    @error('Name_ar')
-                                    <div class="alert alert-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="col">
-                                    <label for="title">{{trans('Teacher_trans.Name')}}</label>
+                                    <label for="title">Name</label>
                                     <input type="text" name="Name" class="form-control">
                                     @error('Name')
                                     <div class="alert alert-danger">{{ $message }}</div>

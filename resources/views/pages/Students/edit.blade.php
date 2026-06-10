@@ -108,6 +108,13 @@
 
                             <div class="col-md-3">
                                 <div class="form-group">
+                                    <label for="phone">Phone Number :</label>
+                                    <input class="form-control" name="phone" type="text" value="{{ old('phone', $Students->phone) }}">
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
                                     <label>{{trans('Students_trans.Date_of_Birth')}}  :</label>
                                     <input class="form-control" type="text" value="{{$Students->Date_Birth}}" id="datepicker-action" name="Date_Birth" data-date-format="yyyy-mm-dd">
                                 </div>
@@ -154,7 +161,10 @@
                                 <div class="form-group">
                                     <label for="section_id">{{trans('Students_trans.section')}} : </label>
                                     <select class="custom-select mr-sm-2" name="section_id">
-                                        <option value="{{$Students->section_id}}"> {{$Students->section->Name_Section}}</option>
+                                        <option value="" disabled {{ empty($Students->section_id) ? 'selected' : '' }}>{{ trans('Parent_trans.Choose') }}...</option>
+                                        @if($Students->section_id)
+                                            <option value="{{$Students->section_id}}" selected>{{ optional($Students->section)->Name_Section ?? 'N/A' }}</option>
+                                        @endif
                                     </select>
                                 </div>
                             </div>

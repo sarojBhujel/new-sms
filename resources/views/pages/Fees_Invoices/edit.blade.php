@@ -2,13 +2,13 @@
 @section('css')
     @toastr_css
 @section('title')
-    تعديل رسوم دراسية
+    Edit Fee
 @stop
 @endsection
 @section('page-header')
     <!-- breadcrumb -->
 @section('PageTitle')
-    تعديل رسوم دراسية
+    Edit Fee
 @stop
 <!-- breadcrumb -->
 @endsection
@@ -41,7 +41,7 @@
 
 
                             <div class="form-group col">
-                                <label for="inputEmail4">المبلغ</label>
+                                <label for="inputEmail4">Amount</label>
                                 <input type="number" value="{{$fee_invoices->amount}}" name="amount" class="form-control">
                             </div>
 

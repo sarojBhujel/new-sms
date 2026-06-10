@@ -2,13 +2,13 @@
 @section('css')
 
 @section('title')
-  الاقسام الدراسية
+    Sections
 @stop
 @endsection
 @section('page-header')
     <!-- breadcrumb -->
 @section('PageTitle')
-    الاقسام الدراسية
+    Sections
 @stop
 <!-- breadcrumb -->
 @endsection
@@ -26,8 +26,8 @@
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>اسم المرحلة</th>
-                                <th>اسم القسم</th>
+                                <th>Grade Name</th>
+                                <th>Section Name</th>
                             </tr>
                             </thead>
                             <tbody>

@@ -2,13 +2,13 @@
 @section('css')
     @toastr_css
 @section('title')
-    اضافة حصة جديدة اوفلاين
+    Add New Offline Class
 @stop
 @endsection
 @section('page-header')
 <!-- breadcrumb -->
 @section('PageTitle')
-    اضافة حصة جديدة اوفلاين
+    Add New Offline Class
 @stop
 <!-- breadcrumb -->
 @endsection
@@ -69,7 +69,7 @@
 
                         <div class="col-md-2">
                             <div class="form-group">
-                                <label>رقم الاجتماع : <span class="text-danger">*</span></label>
+                                <label>Meeting ID : <span class="text-danger">*</span></label>
                                 <input class="form-control" name="meeting_id" type="number">
                             </div>
                         </div>
@@ -77,27 +77,27 @@
 
                         <div class="col-md-2">
                             <div class="form-group">
-                                <label>عنوان الحصة : <span class="text-danger">*</span></label>
+                                <label>Class Title : <span class="text-danger">*</span></label>
                                 <input class="form-control" name="topic" type="text">
                             </div>
                         </div>
 
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label>تاريخ ووقت الحصة : <span class="text-danger">*</span></label>
+                                <label>Class Date & Time : <span class="text-danger">*</span></label>
                                 <input class="form-control" type="datetime-local" name="start_time">
                             </div>
                         </div>
                         <div class="col-md-2">
                             <div class="form-group">
-                                <label>مدة الحصة بالدقائق : <span class="text-danger">*</span></label>
+                                <label>Duration (minutes) : <span class="text-danger">*</span></label>
                                 <input class="form-control" name="duration" type="number">
                             </div>
                         </div>
 
                         <div class="col-md-2">
                             <div class="form-group">
-                                <label>كلمة المرور الاجتماع : <span class="text-danger">*</span></label>
+                                <label>Meeting Password : <span class="text-danger">*</span></label>
                                 <input class="form-control" name="password" type="text">
                             </div>
                         </div>
@@ -109,14 +109,14 @@
 
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label>لينك البدء : <span class="text-danger">*</span></label>
+                                <label>Start Link : <span class="text-danger">*</span></label>
                                 <input class="form-control" name="start_url" type="text">
                             </div>
                         </div>
 
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label>لينك الدخول للطلاب : <span class="text-danger">*</span></label>
+                                <label>Student Join Link : <span class="text-danger">*</span></label>
                                 <input class="form-control" name="join_url" type="text">
                             </div>
                         </div>

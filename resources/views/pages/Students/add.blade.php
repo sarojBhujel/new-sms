@@ -107,7 +107,6 @@
                                 </select>
                             </div>
                         </div>
-
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>{{ trans('Students_trans.Date_of_Birth') }} :</label>
@@ -115,16 +114,16 @@
                                     data-date-format="yyyy-mm-dd">
                             </div>
                         </div>
-
-                    </div>
-
-                    <h6 style="font-family: 'Cairo', sans-serif;color: blue">
-                        {{ trans('Students_trans.Student_information') }}</h6><br>
-                    <div class="row">
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <div class="form-group">
-                                <label for="Grade_id">Grade : <span
-                                        class="text-danger">*</span></label>
+                                    <label for="phone">Phone Number :</label>
+                                    <input class="form-control" name="phone" type="text" value="{{ old('phone') }}">
+                            </div>
+                        </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                        <label for="Grade_id">Grade : <span class="text-danger">*</span></label>
                                 <select class="custom-select mr-sm-2" name="Grade_id">
                                     <option selected disabled>{{ trans('Parent_trans.Choose') }}...</option>
                                     @foreach ($my_classes as $c)
@@ -145,8 +144,7 @@
 
                         <div class="col-md-2">
                             <div class="form-group">
-                                <label for="Classroom_id">Class : <span
-                                        class="text-danger">*</span></label>
+                                <label for="Classroom_id">Class : <span class="text-danger">*</span></label>
                                 <select class="custom-select mr-sm-2" name="Classroom_id">
 
                                 </select>

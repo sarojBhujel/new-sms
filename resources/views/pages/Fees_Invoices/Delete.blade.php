@@ -3,7 +3,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 style="font-family: 'Cairo', sans-serif;" class="modal-title" id="exampleModalLabel">حذف فاتورة</h5>
+                <h5 style="font-family: 'Cairo', sans-serif;" class="modal-title" id="exampleModalLabel">Delete Invoice</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -13,7 +13,7 @@
                     @csrf
                     @method('DELETE')
                     <input type="hidden" name="id" value="{{$Fee_invoice->id}}">
-                    <h5 style="font-family: 'Cairo', sans-serif;">Are you sure you want to delete? ؟</h5>
+                    <h5 style="font-family: 'Cairo', sans-serif;">Are you sure you want to delete?</h5>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">{{trans('Students_trans.Close')}}</button>
                         <button  class="btn btn-danger">{{trans('Students_trans.submit')}}</button>

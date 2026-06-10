@@ -18,7 +18,6 @@ class StoreTeachers extends FormRequest
         return [
             'Email' => 'required|unique:teachers,Email,' . $this->id,
             'Password' => 'required',
-            'Name_ar' => 'required',
             'Name' => 'required',
             'Specialization_id' => 'required',
             'Gender_id' => 'required',
@@ -35,7 +34,6 @@ class StoreTeachers extends FormRequest
             'Email.required' => trans('validation.required'),
             'Email.unique' => trans('validation.unique'),
             'Password.required' => trans('validation.required'),
-            'Name_ar.required' => trans('validation.required'),
             'Name.required' => trans('validation.required'),
             'Specialization_id.required' => trans('validation.required'),
             'Gender_id.required' => trans('validation.required'),
