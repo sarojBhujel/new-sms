@@ -7,7 +7,9 @@ use App\Exports\StudentsImportTemplateExport;
 use App\Http\Requests\ImportStudentsRequest;
 use App\Http\Requests\StoreStudents;
 use App\Imports\StudentImport;
+use App\Models\Classroom;
 use App\Models\FiscalYear;
+use App\Models\Grade;
 use App\Models\Student;
 use App\Models\Type_Blood;
 use App\Repository\StudentRepositoryInterface;
@@ -40,6 +42,14 @@ class StudentController extends Controller
                     $q->where('name', 'like', "%{$search}%")
                       ->orWhere('email', 'like', "%{$search}%");
                 });
+            }
+
+            if ($request->filled('grade_id')) {
+                $query->where('Grade_id', $request->input('grade_id'));
+            }
+
+            if ($request->filled('classroom_id')) {
+                $query->where('Classroom_id', $request->input('classroom_id'));
             }
 
             $recordsTotal = Student::count();
@@ -81,7 +91,10 @@ class StudentController extends Controller
             ]);
         }
 
-        return view('pages.Students.index');
+        $grades = Grade::orderBy('Name')->get();
+        $classrooms = Classroom::orderBy('Name_Class')->get();
+
+        return view('pages.Students.index', compact('grades', 'classrooms'));
     }
 
 

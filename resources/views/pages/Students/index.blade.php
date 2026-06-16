@@ -23,9 +23,34 @@
                             <div class="card-body">
                                 <div class="d-flex flex-wrap align-items-center mb-3">
                                     <a href="{{ route('Students.create') }}" class="btn btn-success btn-sm mr-2" role="button"
-                                       aria-pressed="true">{{ trans('main_trans.add_student') }}</a>
+                                       aria-pressed="true">Add Student</a>
                                     <a href="{{ route('Students.import.template') }}" class="btn btn-info btn-sm mr-2">Download Student Import Template</a>
                                     <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#studentImportModal">Import Students</button>
+                                </div>
+
+                                <div class="row mb-4">
+                                    <div class="col-md-4 mb-2">
+                                        <label class="text-dark font-weight-bold" for="filterGrade">Grade</label>
+                                        <select id="filterGrade" class="form-control form-control-sm">
+                                            <option value="">All</option>
+                                            @foreach($grades as $grade)
+                                                <option value="{{ $grade->id }}">{{ $grade->Name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 mb-2">
+                                        <label class="text-dark font-weight-bold" for="filterClassroom">Classroom</label>
+                                        <select id="filterClassroom" class="form-control form-control-sm">
+                                            <option value="">All</option>
+                                            @foreach($classrooms as $classroom)
+                                                <option value="{{ $classroom->id }}" data-grade="{{ $classroom->Grade_id }}">{{ $classroom->Name_Class }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 d-flex align-items-end mb-2">
+                                        <button id="resetStudentFilters" class="btn btn-outline-secondary btn-sm mr-2">Reset</button>
+                                        {{-- <span class="text-muted small">{{ trans('Students_trans.Filter_by_grade_and_class') }}</span> --}}
+                                    </div>
                                 </div>
 
                                 @if($errors->any())
@@ -161,7 +186,11 @@
                 serverSide: true,
                 ajax: {
                     url: '{{ route('Students.index') }}',
-                    type: 'GET'
+                    type: 'GET',
+                    data: function (d) {
+                        d.grade_id = $('#filterGrade').val();
+                        d.classroom_id = $('#filterClassroom').val();
+                    }
                 },
                 columns: [
                     {
@@ -175,8 +204,18 @@
                     { data: 'name' },
                     { data: 'email' },
                     { data: 'gender' },
-                    { data: 'grade' },
-                    { data: 'classroom' },
+                    {
+                        data: 'grade',
+                        render: function (data) {
+                            return data ? '<span class="badge badge-pill badge-primary">' + data + '</span>' : '<span class="badge badge-pill badge-secondary">N/A</span>';
+                        }
+                    },
+                    {
+                        data: 'classroom',
+                        render: function (data) {
+                            return data ? '<span class="badge badge-pill badge-info">' + data + '</span>' : '<span class="badge badge-pill badge-secondary">N/A</span>';
+                        }
+                    },
                     { data: 'section' },
                     { data: 'admission_no' },
                     { data: 'roll_no' },
@@ -219,6 +258,26 @@
                         previous: 'Previous'
                     }
                 }
+            });
+
+            $('#filterGrade, #filterClassroom').on('change', function () {
+                studentsTable.ajax.reload();
+            });
+
+            $('#resetStudentFilters').on('click', function () {
+                $('#filterGrade').val('');
+                $('#filterClassroom').val('');
+                studentsTable.ajax.reload();
+            });
+
+            var originalClassroomOptions = $('#filterClassroom option').clone();
+            $('#filterGrade').on('change', function () {
+                var selectedGrade = $(this).val();
+                $('#filterClassroom').html(originalClassroomOptions.filter(function () {
+                    return !selectedGrade || $(this).data('grade') == selectedGrade;
+                }));
+                $('#filterClassroom').prepend('<option value="">All</option>');
+                $('#filterClassroom').val('');
             });
 
             $(document).on('click', '.btn-delete-student', function (e) {
