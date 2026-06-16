@@ -24,9 +24,9 @@ class SpecializationController extends Controller
             // Search
             if (request()->has('search') && !empty(request()->input('search.value'))) {
                 $search = request()->input('search.value');
-                $query->where('specialization_name', 'like', "%{$search}%")
-                      ->orWhere('specialization_code', 'like', "%{$search}%")
-                      ->orWhere('description', 'like', "%{$search}%");
+                $query->where('Name', 'like', "%{$search}%");
+                    //   ->orWhere('specialization_code', 'like', "%{$search}%")
+                    //   ->orWhere('description', 'like', "%{$search}%");
             }
 
             $recordsTotal = Specialization::count();
@@ -35,7 +35,7 @@ class SpecializationController extends Controller
             // Sorting
             $orderColumn = request()->input('order.0.column', 0);
             $orderDir = request()->input('order.0.dir', 'asc');
-            $columns = ['id', 'specialization_name', 'specialization_code', 'description', 'status', 'id'];
+            $columns = ['id', 'Name'];
             if (isset($columns[$orderColumn])) {
                 $query->orderBy($columns[$orderColumn], $orderDir);
             }
@@ -68,10 +68,10 @@ class SpecializationController extends Controller
             $validated = $request->validated();
 
             Specialization::create([
-                'specialization_name' => $request->specialization_name,
-                'specialization_code' => $request->specialization_code,
-                'description' => $request->description,
-                'status' => $request->boolean('status'),
+                'Name' => $request->Name,
+                // 'specialization_code' => $request->specialization_code,
+                // 'description' => $request->description,
+                // 'status' => $request->boolean('status'),
             ]);
 
             toastr()->success('Data has been saved successfully');
@@ -100,10 +100,10 @@ class SpecializationController extends Controller
             $specialization = Specialization::findOrFail($id);
 
             $specialization->update([
-                'specialization_name' => $request->specialization_name,
-                'specialization_code' => $request->specialization_code,
-                'description' => $request->description,
-                'status' => $request->boolean('status'),
+                'Name' => $request->Name,
+                // 'specialization_code' => $request->specialization_code,
+                // 'description' => $request->description,
+                // 'status' => $request->boolean('status'),
             ]);
 
             return response()->json(['message' => 'Specialization updated successfully.', 'specialization' => $specialization]);

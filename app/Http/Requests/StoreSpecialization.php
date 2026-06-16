@@ -24,10 +24,10 @@ class StoreSpecialization extends FormRequest
     public function rules()
     {
         return [
-            'specialization_name' => 'required|string|unique:specializations,specialization_name,' . $this->id,
-            'specialization_code' => 'nullable|string|unique:specializations,specialization_code,' . $this->id,
-            'description' => 'nullable|string',
-            'status' => 'boolean',
+            'Name' => 'required|string|unique:specializations,Name,' . $this->id,
+            // 'specialization_code' => 'nullable|string|unique:specializations,specialization_code,' . $this->id,
+            // 'description' => 'nullable|string',
+            // 'status' => 'boolean',
         ];
     }
 }

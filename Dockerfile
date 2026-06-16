@@ -10,6 +10,10 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     libonig-dev \
     libxml2-dev \
+    libpng-dev \
+    libjpeg62-turbo-dev \
+    libfreetype6-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install \
         pdo_mysql \
         mbstring \
@@ -17,6 +21,7 @@ RUN apt-get update && apt-get install -y \
         pcntl \
         bcmath \
         zip \
+        gd \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -34,10 +39,12 @@ RUN mkdir -p \
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
-RUN composer install --no-interaction --prefer-dist --optimize-autoloader --no-scripts
+# RUN composer install --no-interaction --prefer-dist --optimize-autoloader --no-scripts
 
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 775 storage bootstrap/cache
+    
+USER www-data
 
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 CMD ["php-fpm"]

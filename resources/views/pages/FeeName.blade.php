@@ -312,6 +312,19 @@
             toggleMonthGroups($(this).val());
         });
 
+        $('#fee_amount').on('input', function () {
+            var amount = $(this).val();
+            if (amount === null || amount === '') {
+                return;
+            }
+
+            $('#classFeeRows').find('input.classFee').each(function () {
+                if ($(this).val() === null || $(this).val() === '') {
+                    $(this).val(amount);
+                }
+            });
+        });
+
         $('#feeNameForm').on('submit', function (e) {
             e.preventDefault();
             $('#feeFormErrors').addClass('d-none').empty();
@@ -455,7 +468,7 @@
                             </div>
                             <div class="col-md-3">
                                 <label>Amount</label>
-                                <input type="number" step="0.01" name="class_amount[]" class="form-control" value="${mapping.amount || ''}">
+                                <input type="number" step="0.01" name="class_amount[]" class="form-control classFee" value="${mapping.amount || ''}">
                             </div>
                             <div class="col-md-5">
                                 <label>Remarks</label>

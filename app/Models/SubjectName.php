@@ -5,16 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Specialization extends Model
+class SubjectName extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'Name'
-    ];
+    protected $fillable = ['name', 'code', 'status'];
 
-    public function teachers()
+    public function subjects()
     {
-        return $this->hasMany(Teacher::class);
+        return $this->hasMany(Subject::class);
     }
 }

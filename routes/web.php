@@ -4,6 +4,7 @@ use App\Http\Controllers\Classrooms\ClassroomController;
 use App\Http\Controllers\FeeNamesController;
 use App\Http\Controllers\Grades\GradeController;
 use App\Http\Controllers\Students\StudentController;
+use App\Http\Controllers\SubjectNameController;
 use App\Models\Classroom;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -138,6 +139,9 @@ Route::group(
         Route::group(['namespace' => 'App\Http\Controllers\Subjects'], function () {
             Route::resource('subjects', 'SubjectController');
         });
+
+        //==============================Subject Names============================
+        Route::resource('subject-names', SubjectNameController::class);
 
         //==============================Faculties============================
         Route::group(['namespace' => 'App\Http\Controllers\Faculties'], function () {

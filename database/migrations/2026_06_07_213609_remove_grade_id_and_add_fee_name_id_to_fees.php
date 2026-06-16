@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::table('fees', function (Blueprint $table) {
             //  $table->dropForeign(['Grade_id']);
             //   $table->dropColumn('Grade_id');
-            // $table->foreignId('fee_name_id')->references('id')->on('fee_names');
+            $table->foreignId('fee_name_id')->references('id')->on('fee_names');
         });
     }
 
@@ -28,8 +28,8 @@ return new class extends Migration
     public function down()
     {
         Schema::table('fees', function (Blueprint $table) {
-             $table->dropForeign(['Grade_id']);
-              $table->dropColumn('Grade_id');
+             $table->dropForeign(['fee_name_id']);
+              $table->dropColumn('fee_name_id');
         });
     }
 };

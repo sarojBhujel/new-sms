@@ -47,9 +47,9 @@
                             <tr>
                                 <th>#</th>
                                 <th>Name</th>
-                                <th>Code</th>
+                                {{-- <th>Code</th>
                                 <th>Description</th>
-                                <th>Status</th>
+                                <th>Status</th> --}}
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -82,24 +82,24 @@
                         <div class="row">
                             <div class="col">
                                 <label for="edit_specialization_name" class="mr-sm-2">Specialization Name :</label>
-                                <input id="edit_specialization_name" type="text" class="form-control" name="specialization_name" required>
+                                <input id="edit_specialization_name" type="text" class="form-control" name="Name" required>
                             </div>
                         </div>
-                        <div class="row mt-3">
-                            <div class="col">
-                                <label for="edit_specialization_code" class="mr-sm-2">Specialization Code :</label>
-                                <input id="edit_specialization_code" type="text" class="form-control" name="specialization_code">
-                            </div>
-                        </div>
-                        <div class="form-group mt-3">
-                            <label for="edit_description">Description :</label>
-                            <textarea class="form-control" id="edit_description" name="description" rows="3"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="edit_status">Status:</label>
-                            <input type="checkbox" id="edit_status" name="status" value="1" checked>
-                            <span>Active</span>
-                        </div>
+                                        {{-- <div class="row mt-3">
+                                            <div class="col">
+                                                <label for="edit_specialization_code" class="mr-sm-2">Specialization Code :</label>
+                                                <input id="edit_specialization_code" type="text" class="form-control" name="specialization_code">
+                                            </div>
+                                        </div>
+                                        <div class="form-group mt-3">
+                                            <label for="edit_description">Description :</label>
+                                            <textarea class="form-control" id="edit_description" name="description" rows="3"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="edit_status">Status:</label>
+                                            <input type="checkbox" id="edit_status" name="status" value="1" checked>
+                                            <span>Active</span>
+                                        </div> --}}
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-success">Submit</button>
@@ -155,10 +155,10 @@
                         <div class="row">
                             <div class="col">
                                 <label for="specialization_name" class="mr-sm-2">Specialization Name :</label>
-                                <input id="specialization_name" type="text" name="specialization_name" class="form-control" required>
+                                <input id="specialization_name" type="text" name="Name" class="form-control" required>
                             </div>
                         </div>
-                        <div class="row mt-3">
+                        {{-- <div class="row mt-3">
                             <div class="col">
                                 <label for="specialization_code" class="mr-sm-2">Specialization Code :</label>
                                 <input id="specialization_code" type="text" name="specialization_code" class="form-control">
@@ -172,7 +172,7 @@
                             <label for="status">Status:</label>
                             <input type="checkbox" name="status" value="1" checked>
                             <span>Active</span>
-                        </div>
+                        </div> --}}
                         <br><br>
                 </div>
                 <div class="modal-footer">
@@ -221,15 +221,15 @@
                         orderable: false,
                         searchable: false
                     },
-                    { data: 'specialization_name' },
-                    { data: 'specialization_code' },
-                    { data: 'description' },
-                    {
-                        data: 'status',
-                        render: function(data) {
-                            return data ? '<span class="badge badge-success">Active</span>' : '<span class="badge badge-danger">Inactive</span>';
-                        }
-                    },
+                    { data: 'Name' },
+                    // { data: 'specialization_code' },
+                    // { data: 'description' },
+                    // {
+                    //     data: 'status',
+                    //     render: function(data) {
+                    //         return data ? '<span class="badge badge-success">Active</span>' : '<span class="badge badge-danger">Inactive</span>';
+                    //     }
+                    // },
                     {
                         data: 'id',
                         render: function(data, type, row) {
@@ -267,10 +267,10 @@
                 var id = $(this).data('id');
                 $.getJSON('/specializations/' + id + '/edit', function (specialization) {
                     $('#edit_specialization_id').val(specialization.id);
-                    $('#edit_specialization_name').val(specialization.specialization_name);
-                    $('#edit_specialization_code').val(specialization.specialization_code);
-                    $('#edit_description').val(specialization.description);
-                    $('#edit_status').prop('checked', specialization.status == 1);
+                    $('#edit_specialization_name').val(specialization.Name);
+                    // $('#edit_specialization_code').val(specialization.specialization_code);
+                    // $('#edit_description').val(specialization.description);
+                    // $('#edit_status').prop('checked', specialization.status == 1);
                     editModal.modal('show');
                 }).fail(function () {
                     toastr.error('Unable to load specialization data.');
@@ -282,10 +282,10 @@
                 e.preventDefault();
                 var id = $('#edit_specialization_id').val();
                 var payload = {
-                    specialization_name: $('#edit_specialization_name').val(),
-                    specialization_code: $('#edit_specialization_code').val(),
-                    description: $('#edit_description').val(),
-                    status: $('#edit_status').is(':checked') ? 1 : 0
+                    Name: $('#edit_specialization_name').val(),
+                    // specialization_code: $('#edit_specialization_code').val(),
+                    // description: $('#edit_description').val(),
+                    // status: $('#edit_status').is(':checked') ? 1 : 0
                 };
 
                 $.ajax({
