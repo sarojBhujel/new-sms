@@ -24,6 +24,13 @@ return new class extends Migration
             $table->boolean('active')->default(true);
             $table->timestamps();
         });
+        Schema::table('fees', function (Blueprint $table) {
+            if (!Schema::hasColumn('fees', 'fee_name_id')) {
+                $table->unsignedBigInteger('fee_name_id')->nullable();
+                $table->foreign('fee_name_id')->references('id')->on('fee_names');
+            }
+        });
+
     }
 
     /**
@@ -34,5 +41,11 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('fee_names');
+        if (Schema::hasColumn('fees', 'fee_name_id')) {
+            Schema::table('fees', function (Blueprint $table) {
+                $table->dropForeign(['fee_name_id']);
+                $table->dropColumn('fee_name_id');
+            });
+        }
     }
 };
