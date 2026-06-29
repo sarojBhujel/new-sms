@@ -86,14 +86,14 @@
                                         <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>{{trans('Students_trans.name')}}</th>
+                                            <th>Student Name</th>
                                             <th>{{trans('Students_trans.email')}}</th>
                                             <th>{{trans('Students_trans.gender')}}</th>
                                             <th>{{trans('Students_trans.Grade')}}</th>
                                             <th>{{trans('Students_trans.classrooms')}}</th>
                                             <th>{{trans('Students_trans.section')}}</th>
-                                            <th>{{trans('Students_trans.admission_no')}}</th>
-                                            <th>{{trans('Students_trans.roll_no')}}</th>
+                                            <th>Admission No.</th>
+                                            <th>Roll No.</th>
                                             {{-- <th>{{trans('Students_trans.academic_year')}}</th> --}}
                                             <th>{{trans('Students_trans.Processes')}}</th>
                                         </tr>

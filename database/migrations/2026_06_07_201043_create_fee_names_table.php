@@ -17,13 +17,22 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('code')->nullable();
-            $table->decimal('amount',8,2);
+            $table->decimal('amount', 8, 2);
             $table->string('type')->nullable();
             $table->string('months')->nullable();
             $table->text('description')->nullable();
             $table->boolean('active')->default(true);
             $table->timestamps();
         });
+
+        if (Schema::hasTable('fees')) {
+            Schema::table('fees', function (Blueprint $table) {
+                if (! Schema::hasColumn('fees', 'fee_name_id')) {
+                    $table->unsignedBigInteger('fee_name_id');
+                    $table->foreign('fee_name_id')->references('id')->on('fee_names');
+                }
+            });
+        }
     }
 
     /**
