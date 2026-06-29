@@ -33,6 +33,7 @@ return new class extends Migration
                 }
             });
         }
+
     }
 
     /**
@@ -43,5 +44,11 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('fee_names');
+        if (Schema::hasColumn('fees', 'fee_name_id')) {
+            Schema::table('fees', function (Blueprint $table) {
+                $table->dropForeign(['fee_name_id']);
+                $table->dropColumn('fee_name_id');
+            });
+        }
     }
 };
